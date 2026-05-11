@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Arenas y Gravas Leon</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.11.0/dist/tabler-icons.min.css"/>
+<style>
+:root{--bg:#f5f4f0;--sf:#fff;--bd:rgba(0,0,0,.10);--bds:rgba(0,0,0,.18);--tx:#1a1a18;--mu:#6b6b66;--fa:#a0a09a;--sbg:#eaf3de;--stx:#3b6d11;--wbg:#faeeda;--wtx:#854f0b;--ibg:#e6f1fb;--itx:#185fa5;--dbg:#fcebeb;--dtx:#a32d2d;--r:10px;--rs:6px;--fn:system-ui,-apple-system,sans-serif;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--fn);background:var(--bg);min-height:100vh;color:var(--tx);}
+#splash{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1.5rem;}
+.slogo{font-family:Georgia,serif;font-size:22px;text-align:center;margin-bottom:6px;}
+.ssub{font-size:13px;color:var(--mu);text-align:center;margin-bottom:2.5rem;}
+.slbl{font-size:11px;color:var(--fa);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;text-align:center;}
+.cbtn{width:100%;max-width:320px;margin-bottom:10px;background:var(--sf);border:.5px solid var(--bds);border-radius:var(--r);padding:14px 18px;display:flex;align-items:center;gap:12px;cursor:pointer;font-family:var(--fn);text-align:left;}
+.cbtn:hover{background:#f0efe9;}
+.cico{width:36px;height:36px;border-radius:8px;background:var(--bg);border:.5px solid var(--bd);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.cnm{font-size:15px;font-weight:500;}
+.cds{font-size:12px;color:var(--mu);margin-top:1px;}
+.adme{margin-top:1.5rem;font-size:13px;color:var(--fa);cursor:pointer;text-decoration:underline;}
+#app{display:none;max-width:420px;margin:0 auto;}
+.tbar{position:sticky;top:0;z-index:10;background:var(--sf);border-bottom:.5px solid var(--bd);padding:12px 16px;display:flex;align-items:center;gap:10px;}
+.bbtn{background:none;border:none;cursor:pointer;padding:4px;color:var(--mu);font-size:20px;display:flex;}
+.ttl{font-size:15px;font-weight:500;flex:1;}
+.nav{display:flex;background:var(--sf);border-bottom:.5px solid var(--bd);}
+.nbtn{flex:1;padding:10px 4px;font-size:12px;background:transparent;border:none;border-bottom:2px solid transparent;color:var(--mu);cursor:pointer;font-family:var(--fn);}
+.nbtn.active{color:var(--tx);border-bottom-color:var(--tx);font-weight:500;}
+.ct{padding:1rem;}
+.sc{display:none;}
+.sc.active{display:block;}
+.card{background:var(--sf);border:.5px solid var(--bd);border-radius:var(--r);padding:1rem 1.125rem;margin-bottom:1rem;}
+.ctit{font-size:11px;font-weight:500;color:var(--mu);margin-bottom:14px;text-transform:uppercase;letter-spacing:.06em;display:flex;align-items:center;gap:8px;}
+.plbl{display:inline-block;font-size:11px;padding:2px 8px;border-radius:999px;background:var(--ibg);color:var(--itx);font-weight:500;text-transform:none;letter-spacing:0;}
+.fld{margin-bottom:12px;}
+.fld:last-child{margin-bottom:0;}
+.fld label{display:block;font-size:13px;color:var(--mu);margin-bottom:5px;}
+.fld input,.fld select{width:100%;padding:9px 11px;border:.5px solid var(--bds);border-radius:var(--rs);font-size:14px;font-family:var(--fn);background:var(--sf);color:var(--tx);appearance:none;}
+.fld select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px;}
+.fr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;}
+.ntag{font-size:13px;color:var(--stx);background:var(--sbg);padding:7px 10px;border-radius:var(--rs);margin-top:8px;display:none;}
+.slist{display:flex;flex-direction:column;gap:8px;}
+.sit{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--rs);border:.5px solid var(--bd);background:var(--bg);cursor:pointer;font-size:14px;color:var(--mu);font-family:var(--fn);text-align:left;}
+.sit.done{background:var(--sbg);color:var(--stx);border-color:transparent;}
+.sdot{width:8px;height:8px;border-radius:50%;background:var(--bds);flex-shrink:0;}
+.sit.done .sdot{background:var(--stx);}
+.sbmt{width:100%;padding:13px;background:var(--tx);color:#fff;border:none;border-radius:var(--r);font-size:14px;font-weight:500;font-family:var(--fn);cursor:pointer;margin-top:4px;display:flex;align-items:center;justify-content:center;gap:8px;}
+.sbmt:disabled{opacity:.5;cursor:not-allowed;}
+.vc{background:var(--sf);border:.5px solid var(--bd);border-radius:var(--r);padding:1rem 1.125rem;margin-bottom:10px;}
+.vtop{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;}
+.vtit{font-size:15px;font-weight:500;}
+.vsub{font-size:12px;color:var(--mu);margin-top:2px;}
+.vgrd{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px;}
+.vst{font-size:12px;color:var(--mu);}
+.vst span{display:block;font-size:13px;font-weight:500;color:var(--tx);margin-top:1px;}
+.bdg{display:inline-block;font-size:11px;padding:3px 9px;border-radius:999px;font-weight:500;}
+.bt{background:var(--wbg);color:var(--wtx);}
+.bd2{background:var(--sbg);color:var(--stx);}
+.bi{background:var(--ibg);color:var(--itx);}
+.ba{background:var(--wbg);color:var(--wtx);}
+.res{background:var(--bg);border-radius:var(--rs);padding:12px;}
+.rr{display:flex;justify-content:space-between;font-size:13px;padding:4px 0;color:var(--mu);}
+.rr.tot{font-weight:500;color:var(--tx);border-top:.5px solid var(--bd);margin-top:8px;padding-top:10px;font-size:15px;}
+.ir{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:.5px solid var(--bd);}
+.ir:last-child{border-bottom:none;}
+.inm{font-size:14px;font-weight:500;}
+.isb{font-size:12px;color:var(--mu);}
+.iq{text-align:right;font-size:14px;font-weight:500;}
+.iq small{display:block;font-size:11px;color:var(--mu);font-weight:400;}
+.slb{font-size:11px;color:var(--fa);font-weight:500;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;}
+.dvd{height:.5px;background:var(--bd);margin:12px 0;}
+.alck{text-align:center;padding:2rem 1rem;}
+.alck i{font-size:32px;color:var(--mu);margin-bottom:12px;display:block;}
+.alck p{font-size:13px;color:var(--mu);margin-bottom:16px;}
+.alck input{width:100%;max-width:200px;padding:10px;border:.5px solid var(--bds);border-radius:var(--rs);font-size:16px;text-align:center;letter-spacing:.2em;font-family:var(--fn);margin-bottom:12px;}
+.perr{font-size:12px;color:var(--dtx);margin-top:8px;display:none;}
+/* Links info box */
+.linkbox{background:var(--sf);border:.5px solid var(--bd);border-radius:var(--r);padding:1rem 1.125rem;margin-bottom:1rem;}
+.linkrow{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:.5px solid var(--bd);gap:8px;}
+.linkrow:last-child{border-bottom:none;}
+.linknm{font-size:13px;font-weight:500;color:var(--tx);}
+.linkurl{font-size:11px;color:var(--mu);margin-top:2px;word-break:break-all;}
+.copybtn{flex-shrink:0;padding:5px 10px;background:var(--bg);border:.5px solid var(--bds);border-radius:var(--rs);font-size:12px;cursor:pointer;font-family:var(--fn);color:var(--tx);}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<div id="splash">
+  <div class="slogo">Arenas y Gravas Leon</div>
+  <div class="ssub">Sistema de control de cargas</div>
+  <div class="slbl">Selecciona tu empresa</div>
+  <button class="cbtn" onclick="enterApp('AER')"><div class="cico"><i class="ti ti-truck" style="font-size:18px;color:#6b6b66"></i></div><div><div class="cnm">AER — Auto Express Rodriguez</div><div class="cds">Ruben · La Cerquilla y Alvarado</div></div></button>
+  <button class="cbtn" onclick="enterApp('Flagga')"><div class="cico"><i class="ti ti-truck" style="font-size:18px;color:#6b6b66"></i></div><div><div class="cnm">Flagga</div><div class="cds">La Cerquilla, Veracruz</div></div></button>
+  <button class="cbtn" onclick="enterApp('Felipe')"><div class="cico"><i class="ti ti-truck" style="font-size:18px;color:#6b6b66"></i></div><div><div class="cnm">Felipe Salazar</div><div class="cds">La Cerquilla, Veracruz</div></div></button>
+  <div class="adme" onclick="enterApp('Admin')"><i class="ti ti-lock" style="font-size:13px;"></i> Acceso administrador</div>
+</div>
+
+<div id="app">
+  <div class="tbar">
+    <button class="bbtn" id="backbtn" onclick="goBack()"><i class="ti ti-arrow-left"></i></button>
+    <div class="ttl" id="ttl">—</div>
+    <span class="bdg ba" id="adi" style="display:none;">Admin</span>
+  </div>
+  <div id="alks" class="ct" style="display:none;">
+    <div class="alck">
+      <i class="ti ti-shield-lock"></i>
+      <p>Ingresa tu contrasena de administrador.</p>
+      <input type="password" id="pwdi" placeholder="......" onkeydown="if(event.key==='Enter')chkPwd()"/>
+      <br><button class="sbmt" style="max-width:200px;margin:0 auto;" onclick="chkPwd()">Entrar</button>
+      <div class="perr" id="perr">Contrasena incorrecta</div>
+    </div>
+  </div>
+  <nav class="nav" id="mnav" style="display:none;">
+    <button class="nbtn active" onclick="shSc('nvo',this)">Nuevo viaje</button>
+    <button class="nbtn" onclick="shSc('his',this)">Historial</button>
+    <button class="nbtn" id="invt" onclick="shSc('inv',this)" style="display:none;">Inventario</button>
+    <button class="nbtn" id="lnkt" onclick="shSc('lnk',this)" style="display:none;">Links</button>
+  </nav>
+  <div class="ct" id="mct" style="display:none;">
+
+    <div id="sc-nvo" class="sc active">
+      <div class="card">
+        <div class="ctit">Datos del viaje</div>
+        <div class="fld"><label>Fleteria</label><input type="text" id="fld" readonly style="background:var(--bg);color:var(--mu);"/></div>
+        <div class="fld"><label>Nombre del chofer</label><input type="text" id="chof" placeholder="Nombre completo"/></div>
+        <div class="fld"><label>Placas del camion</label><input type="text" id="plac" placeholder="Ej. 94BE8U"/></div>
+        <div class="fr">
+          <div class="fld" id="orif" style="display:none;"><label>Origen</label>
+            <select id="ori" onchange="rndrPl()"><option value="">Seleccionar...</option><option value="cerquilla">La Cerquilla, Ver.</option><option value="alvarado">Alvarado, Ver.</option></select>
+          </div>
+          <div class="fld"><label>Fecha de carga</label><input type="date" id="fcha"/></div>
+        </div>
+        <div class="fld"><label>Numero de planas</label>
+          <select id="npl" onchange="rndrPl()"><option value="1">Sencillo — 1 plana</option><option value="2">Full — 2 planas</option></select>
+        </div>
+      </div>
+      <div id="plc"></div>
+      <div id="totc" style="display:none;">
+        <div class="card"><div class="ctit">Total del viaje</div><div class="res" id="totcon"></div></div>
+      </div>
+      <div class="card">
+        <div class="ctit">Estatus del viaje</div>
+        <div class="slist">
+          <button class="sit" onclick="this.classList.toggle('done')"><span class="sdot"></span>Llego a cargar</button>
+          <button class="sit" onclick="this.classList.toggle('done')"><span class="sdot"></span>Cargado — bascula salida</button>
+          <button class="sit" onclick="this.classList.toggle('done')"><span class="sdot"></span>Salio a destino</button>
+          <button class="sit" onclick="this.classList.toggle('done')"><span class="sdot"></span>Llego a bodega</button>
+          <button class="sit" onclick="this.classList.toggle('done')"><span class="sdot"></span>Descargado y confirmado</button>
+        </div>
+      </div>
+      <div id="adco" style="display:none;">
+        <div class="card">
+          <div class="ctit">Resumen de costos <span class="bdg ba" style="margin-left:6px;">Solo admin</span></div>
+          <div class="res">
+            <div class="rr"><span>Toneladas totales</span><span id="rtons">—</span></div>
+            <div class="rr"><span>Costo arena</span><span id="rarna">—</span></div>
+            <div class="rr"><span>Costo flete</span><span id="rflt">—</span></div>
+            <div class="rr tot"><span>Total estimado</span><span id="rtot">—</span></div>
+          </div>
+        </div>
+      </div>
+      <button class="sbmt" id="sbmt" onclick="reg()"><i class="ti ti-circle-check"></i> Registrar viaje</button>
+    </div>
+
+    <div id="sc-his" class="sc"><div id="hisl"></div></div>
+
+    <div id="sc-inv" class="sc">
+      <div class="slb">Saldo actual en bodega</div>
+      <div class="card">
+        <div class="ir"><div><div class="inm">80-90</div><div class="isb">Supersacos · La Cerquilla</div></div><div class="iq">40<small>supersacos · 80 ton</small></div></div>
+        <div class="ir"><div><div class="inm">70-80 (Planta)</div><div class="isb">Costales · La Cerquilla</div></div><div class="iq">800<small>costales · 40 ton</small></div></div>
+        <div class="ir"><div><div class="inm">40-60</div><div class="isb">Costales · La Cerquilla</div></div><div class="iq">1,400<small>costales · 70 ton</small></div></div>
+        <div class="ir"><div><div class="inm">16-30 cafe</div><div class="isb">Costales · Alvarado</div></div><div class="iq">0<small>costales</small></div></div>
+      </div>
+      <div class="slb" style="margin-top:1rem;">Registrar salida</div>
+      <div class="card">
+        <div class="fld"><label>Tipo de arena</label><select><option>80-90</option><option>70-80 (Planta)</option><option>40-60</option><option>20-40 / 16-30 beige</option><option>8-16</option><option>1/4-1/2</option><option>1/4-3/8 Davila</option><option>1/2-3/4</option><option>1/2-1</option><option>16-30 cafe</option></select></div>
+        <div class="fr"><div class="fld"><label>Cantidad</label><input type="number" placeholder="0"/></div><div class="fld"><label>Unidad</label><select><option>Costales</option><option>Supersacos</option><option>Toneladas</option></select></div></div>
+        <div class="fld"><label>Cliente / destino</label><input type="text" placeholder="Nombre o referencia"/></div>
+        <button class="sbmt">Registrar salida</button>
+      </div>
+    </div>
+
+    <div id="sc-lnk" class="sc">
+      <div class="slb">Links por fleteria</div>
+      <p style="font-size:13px;color:var(--mu);margin-bottom:1rem;">Comparte el link de cada empresa. Al abrirlo entran directo a su formulario, sin ver las demas opciones.</p>
+      <div class="linkbox" id="linkbox"></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const SU='https://script.google.com/macros/s/AKfycbwOIwVu7SsczMpQLDJNyFJIOxUOhgmSetQYtZd-wl8dRi2ux-8IOMYvivinBaLTcsX6TA/exec';
+const AP='1234';
+const CR={
+  AER:{name:'AER — Auto Express Rodriguez',rutas:['cerquilla','alvarado'],fl:{cerquilla:820,alvarado:770}},
+  Flagga:{name:'Flagga',rutas:['cerquilla'],fl:{cerquilla:800}},
+  Felipe:{name:'Felipe Salazar',rutas:['cerquilla'],fl:{cerquilla:800}}
+};
+const AR={
+  cerquilla:[{l:'8-16',p:900},{l:'20-40 / 16-30 beige',p:680},{l:'40-60',p:680},{l:'70-80 (Planta)',p:900},{l:'80-90',p:780},{l:'1/4-1/2',p:900},{l:'1/4-3/8 Davila',p:900},{l:'1/2-3/4',p:900},{l:'1/2-1',p:900}],
+  alvarado:[{l:'16-30 cafe',p:450}]
+};
+const HI={
+  AER:[{ch:'Santos Romero',pl:'04RB5U',fe:'30/05/2026',or:'cerquilla',st:'En transito',pf:820,pls:[{ar:'70-80 (Planta)',fm:'costal',pi:800,br:55330,ta:15490,ne:39840,pa:900},{ar:'80-90',fm:'costal',pi:800,br:50280,ta:10150,ne:40130,pa:780}]}],
+  Flagga:[{ch:'Roberto Sergio',pl:'65BF3X',fe:'02/03/2026',or:'cerquilla',st:'Entregado',pf:800,pls:[{ar:'40-60',fm:'supersaco',pi:18,br:60900,ta:17970,ne:42930,pa:680}]}],
+  Felipe:[{ch:'Jose Luis Jimenez',pl:'94BE8U',fe:'07/05/2026',or:'cerquilla',st:'Entregado',pf:800,pls:[{ar:'40-60',fm:'costal',pi:700,br:51260,ta:15000,ne:36260,pa:680},{ar:'40-60',fm:'costal',pi:700,br:45310,ta:9310,ne:36000,pa:680}]}]
+};
+let cc=null,ia=false,fromUrl=false;
+
+// Auto-detect URL param on load
+window.addEventListener('DOMContentLoaded',()=>{
+  const p=new URLSearchParams(window.location.search).get('f');
+  if(p){
+    fromUrl=true;
+    document.getElementById('splash').style.display='none';
+    enterApp(p);
+  }
+});
+
+function enterApp(c){
+  cc=c;
+  document.getElementById('splash').style.display='none';
+  document.getElementById('app').style.display='block';
+  // Hide back button if came from direct URL link
+  document.getElementById('backbtn').style.display=fromUrl?'none':'flex';
+  if(c==='Admin'){
+    document.getElementById('ttl').textContent='Administrador';
+    document.getElementById('alks').style.display='block';
+    document.getElementById('mnav').style.display='none';
+    document.getElementById('mct').style.display='none';
+  } else setupC(c);
+}
+
+function setupC(c){
+  const cr=CR[c];
+  document.getElementById('ttl').textContent=cr.name.split('—')[0].trim();
+  document.getElementById('fld').value=cr.name;
+  document.getElementById('alks').style.display='none';
+  document.getElementById('mnav').style.display='flex';
+  document.getElementById('mct').style.display='block';
+  document.getElementById('invt').style.display='none';
+  document.getElementById('lnkt').style.display='none';
+  document.getElementById('adco').style.display='none';
+  document.getElementById('adi').style.display='none';
+  const of=document.getElementById('orif'),os=document.getElementById('ori');
+  if(cr.rutas.length>1){
+    of.style.display='block';
+    os.innerHTML='<option value="">Seleccionar...</option>'+cr.rutas.map(r=>'<option value="'+r+'">'+(r==='cerquilla'?'La Cerquilla, Ver.':'Alvarado, Ver.')+'</option>').join('');
+  } else {of.style.display='none';os.value=cr.rutas[0];}
+  document.getElementById('fcha').value=new Date().toISOString().split('T')[0];
+  rndrPl();bldHis(c);shSc('nvo',document.querySelector('.nbtn'));
+}
+
+function chkPwd(){
+  if(document.getElementById('pwdi').value===AP){
+    ia=true;
+    document.getElementById('alks').style.display='none';
+    document.getElementById('mnav').style.display='flex';
+    document.getElementById('mct').style.display='block';
+    document.getElementById('invt').style.display='block';
+    document.getElementById('lnkt').style.display='block';
+    document.getElementById('adco').style.display='block';
+    document.getElementById('adi').style.display='inline-block';
+    document.getElementById('orif').style.display='block';
+    document.getElementById('ori').innerHTML='<option value="">Seleccionar...</option><option value="cerquilla">La Cerquilla, Ver.</option><option value="alvarado">Alvarado, Ver.</option>';
+    document.getElementById('fld').value='Todos los proveedores';
+    document.getElementById('ttl').textContent='Panel admin';
+    document.getElementById('perr').style.display='none';
+    bldLinks();rndrPl();bldHisA();shSc('his',document.querySelectorAll('.nbtn')[1]);
+  } else document.getElementById('perr').style.display='block';
+}
+
+function bldLinks(){
+  const base=window.location.href.split('?')[0];
+  const links=[
+    {name:'AER — Auto Express Rodriguez',key:'AER'},
+    {name:'Flagga',key:'Flagga'},
+    {name:'Felipe Salazar',key:'Felipe'},
+    {name:'Administrador',key:'Admin'}
+  ];
+  document.getElementById('linkbox').innerHTML=links.map(l=>{
+    const url=base+'?f='+l.key;
+    return '<div class="linkrow"><div><div class="linknm">'+l.name+'</div><div class="linkurl">'+url+'</div></div><button class="copybtn" onclick="cpLink(\''+url+'\',this)"><i class="ti ti-copy" style="font-size:13px;"></i></button></div>';
+  }).join('');
+}
+
+function cpLink(url,btn){
+  navigator.clipboard.writeText(url).then(()=>{btn.innerHTML='<i class="ti ti-check" style="font-size:13px;color:var(--stx);"></i>';setTimeout(()=>btn.innerHTML='<i class="ti ti-copy" style="font-size:13px;"></i>',2000);});
+}
+
+function gOri(){return document.getElementById('ori').value||'cerquilla';}
+function aOpts(o){const l=AR[o]||AR.cerquilla;return '<option value="">Seleccionar...</option>'+l.map(a=>'<option value="'+a.p+'" data-l="'+a.l+'">'+a.l+'</option>').join('');}
+
+function rndrPl(){
+  const n=parseInt(document.getElementById('npl').value)||1,o=gOri(),c=document.getElementById('plc');
+  c.innerHTML='';
+  for(let i=1;i<=n;i++){
+    const d=document.createElement('div');d.className='card';
+    d.innerHTML='<div class="ctit"><span class="plbl">Plana '+i+'</span>&nbsp; Material y bascula</div>'+
+      '<div class="fld"><label>Tipo de arena</label><select id="ar'+i+'" onchange="cTot()">'+aOpts(o)+'</select></div>'+
+      '<div class="fld"><label>Formato de carga</label><select id="fm'+i+'" onchange="aPz('+i+')"><option value="">Seleccionar...</option><option value="costal">Costal 50 kg</option><option value="supersaco">Supersaco 2 ton</option></select></div>'+
+      '<div class="fld"><label>Piezas en esta plana</label><input type="number" id="pz'+i+'" placeholder="Ej. 800"/></div>'+
+      '<div class="fr"><div class="fld"><label>Peso bruto (kg)</label><input type="number" id="br'+i+'" placeholder="Cargado" oninput="cNto('+i+')"/></div><div class="fld"><label>Tara (kg)</label><input type="number" id="ta'+i+'" placeholder="Vacio" oninput="cNto('+i+')"/></div></div>'+
+      '<div class="ntag" id="nt'+i+'"></div>';
+    c.appendChild(d);
+  }
+  cTot();
+}
+
+function aPz(i){const f=document.getElementById('fm'+i).value;document.getElementById('pz'+i).placeholder=f==='costal'?'800':f==='supersaco'?'20':'Ej. 800';}
+
+function cNto(i){
+  const b=parseFloat(document.getElementById('br'+i).value)||0,t=parseFloat(document.getElementById('ta'+i).value)||0,n=b-t,tg=document.getElementById('nt'+i);
+  if(n>0){tg.textContent='Peso neto plana '+i+': '+n.toLocaleString()+' kg = '+(n/1000).toFixed(2)+' ton';tg.style.display='block';}
+  else tg.style.display='none';
+  cTot();
+}
+
+function cTot(){
+  const n=parseInt(document.getElementById('npl').value)||1;let tN=0,tA=0;
+  for(let i=1;i<=n;i++){const b=parseFloat(document.getElementById('br'+i)?.value)||0,t=parseFloat(document.getElementById('ta'+i)?.value)||0,ne=Math.max(0,b-t),p=parseFloat(document.getElementById('ar'+i)?.value)||0;tN+=ne;tA+=(ne/1000)*p;}
+  const tc=document.getElementById('totc'),tco=document.getElementById('totcon');
+  if(n>1&&tN>0){
+    tc.style.display='block';let rows='';
+    for(let i=1;i<=n;i++){const b=parseFloat(document.getElementById('br'+i)?.value)||0,t=parseFloat(document.getElementById('ta'+i)?.value)||0,ne=Math.max(0,b-t);if(ne>0)rows+='<div class="rr"><span>Plana '+i+'</span><span>'+ne.toLocaleString()+' kg</span></div>';}
+    tco.innerHTML=rows+'<div class="rr tot"><span>Total neto</span><span>'+tN.toLocaleString()+' kg = '+(tN/1000).toFixed(2)+' ton</span></div>';
+  } else tc.style.display='none';
+  if(!ia)return;
+  const o=gOri(),pf=cc&&CR[cc]?CR[cc].fl[o]||0:800,tons=tN/1000,cf=tons*pf,tot=tA+cf;
+  if(tons>0){document.getElementById('rtons').textContent=tons.toFixed(2)+' ton';document.getElementById('rarna').textContent='$'+tA.toLocaleString('es-MX',{maximumFractionDigits:0});document.getElementById('rflt').textContent='$'+cf.toLocaleString('es-MX',{maximumFractionDigits:0});document.getElementById('rtot').textContent='$'+tot.toLocaleString('es-MX',{maximumFractionDigits:0});}
+  else['rtons','rarna','rflt','rtot'].forEach(id=>document.getElementById(id).textContent='—');
+}
+
+async function reg(){
+  const ch=document.getElementById('chof').value.trim(),pl=document.getElementById('plac').value.trim(),fe=document.getElementById('fcha').value,o=gOri(),n=parseInt(document.getElementById('npl').value)||1;
+  if(!ch||!pl||!o){shT('Completa los campos obligatorios','e');return;}
+  let pls=[];
+  for(let i=1;i<=n;i++){const s=document.getElementById('ar'+i),al=s.options[s.selectedIndex]?.getAttribute('data-l')||'',b=parseFloat(document.getElementById('br'+i).value)||0,t=parseFloat(document.getElementById('ta'+i).value)||0;pls.push({plana:i,arena:al,formato:document.getElementById('fm'+i).value,piezas:document.getElementById('pz'+i).value,pesoBruto:b,pesoTara:t,pesoNeto:Math.max(0,b-t)});}
+  const btn=document.getElementById('sbmt');btn.disabled=true;btn.innerHTML='<i class="ti ti-loader" style="animation:spin 1s linear infinite"></i> Guardando...';
+  const py={fecha:fe,fletera:ia?'Admin':CR[cc].name,chofer:ch,placas:pl.toUpperCase(),origen:o==='cerquilla'?'La Cerquilla, Ver.':'Alvarado, Ver.',numPlanas:n,planas:JSON.stringify(pls),pesoNetoTotal:pls.reduce((s,p)=>s+p.pesoNeto,0),status:'Registrado'};
+  try{
+    await fetch(SU,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(py)});
+    shT('Viaje registrado correctamente','o');
+    document.getElementById('chof').value='';document.getElementById('plac').value='';rndrPl();
+  }catch(e){shT('Error al guardar. Verifica tu conexion.','e');}
+  btn.disabled=false;btn.innerHTML='<i class="ti ti-circle-check"></i> Registrar viaje';
+}
+
+function bldHis(c){const l=document.getElementById('hisl'),v=HI[c]||[];l.innerHTML=v.length?v.map(x=>vCard(x,false)).join(''):'<p style="color:var(--fa);font-size:13px;text-align:center;padding:2rem 0;">Sin viajes registrados aun.</p>';}
+function bldHisA(){const l=document.getElementById('hisl'),all=[...(HI.AER||[]),...(HI.Flagga||[]),...(HI.Felipe||[])];l.innerHTML=all.length?all.map(x=>vCard(x,true)).join(''):'<p style="color:var(--fa);font-size:13px;text-align:center;padding:2rem 0;">Sin viajes.</p>';}
+
+function vCard(v,sc){
+  const bc=v.st==='Entregado'?'bd2':v.st==='En transito'?'bt':'bi',tN=v.pls.reduce((s,p)=>s+p.ne,0),tons=(tN/1000).toFixed(2),ori=v.or==='cerquilla'?'La Cerquilla':'Alvarado';
+  const pH=v.pls.map((p,i)=>'<div style="padding:8px 0;'+(i>0?'border-top:.5px solid var(--bd)':'')+'"><div style="font-size:12px;color:var(--mu);margin-bottom:6px;display:flex;align-items:center;gap:6px;"><span class="plbl">Plana '+(i+1)+'</span> '+p.ar+' &middot; '+p.pi+' '+p.fm+'s</div><div class="vgrd"><div class="vst">Bruto<span>'+p.br.toLocaleString()+' kg</span></div><div class="vst">Tara<span>'+p.ta.toLocaleString()+' kg</span></div><div class="vst">Neto<span>'+p.ne.toLocaleString()+' kg</span></div><div class="vst">Toneladas<span>'+(p.ne/1000).toFixed(2)+' ton</span></div></div></div>').join('');
+  let cH='';
+  if(sc){const ta=v.pls.reduce((s,p)=>s+(p.ne/1000)*p.pa,0),cf=(tN/1000)*v.pf,tot=ta+cf;cH='<div class="dvd"></div><div class="res"><div class="rr"><span>Total neto</span><span>'+tN.toLocaleString()+' kg ('+tons+' ton)</span></div><div class="rr"><span>Costo arena</span><span>$'+ta.toLocaleString('es-MX',{maximumFractionDigits:0})+'</span></div><div class="rr"><span>Costo flete</span><span>$'+cf.toLocaleString('es-MX',{maximumFractionDigits:0})+'</span></div><div class="rr tot"><span>Total</span><span>$'+tot.toLocaleString('es-MX',{maximumFractionDigits:0})+'</span></div></div>';}
+  return '<div class="vc"><div class="vtop"><div><div class="vtit">'+v.ch+'</div><div class="vsub">'+ori+' &rarr; Bodega &middot; '+v.fe+'</div></div><span class="bdg '+bc+'">'+v.st+'</span></div>'+pH+'<div style="font-size:12px;color:var(--fa);margin-top:8px;">Placas: '+v.pl+'</div>'+cH+'</div>';
+}
+
+function shSc(id,btn){document.querySelectorAll('.sc').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.nbtn').forEach(b=>b.classList.remove('active'));document.getElementById('sc-'+id).classList.add('active');if(btn)btn.classList.add('active');}
+function shT(msg,type){let t=document.getElementById('tst');if(!t){t=document.createElement('div');t.id='tst';t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);padding:12px 20px;border-radius:10px;font-size:14px;font-weight:500;z-index:999;transition:opacity .3s;max-width:300px;text-align:center;';document.body.appendChild(t);}t.textContent=msg;t.style.background=type==='o'?'var(--sbg)':'var(--dbg)';t.style.color=type==='o'?'var(--stx)':'var(--dtx)';t.style.opacity='1';setTimeout(()=>t.style.opacity='0',3000);}
+function goBack(){if(fromUrl)return;ia=false;cc=null;document.getElementById('app').style.display='none';document.getElementById('splash').style.display='flex';document.getElementById('pwdi').value='';document.getElementById('perr').style.display='none';}
+</script>
+</body>
+</html>
