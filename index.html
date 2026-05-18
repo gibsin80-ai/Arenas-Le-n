@@ -236,20 +236,7 @@ const AR={
 };
 let TRIPS=[],cc=null,ia=false,fromUrl=false,curTrip=null;
 
-window.addEventListener('DOMContentLoaded',()=>{
-  const p=new URLSearchParams(window.location.search);
-  const f=p.get('f'),t=p.get('trip');
-  if(f){
-    fromUrl=true;
-    document.getElementById('splash').style.display='none';
-    if(t){
-      // Load trip from Sheets then open app
-      loadTripFromSheets(f,t);
-    } else {
-      enterApp(f,null);
-    }
-  }
-});
+// DOMContentLoaded moved to end
 
 async function loadTripFromSheets(carrier, tripId){
   document.getElementById('app').style.display='block';
@@ -850,6 +837,21 @@ function goBack(){
   document.getElementById('splash').style.display='flex';
   document.getElementById('pwdi').value='';document.getElementById('perr').style.display='none';
 }
+
+window.addEventListener('DOMContentLoaded',()=>{
+  const p=new URLSearchParams(window.location.search);
+  const f=p.get('f'),t=p.get('trip');
+  if(f){
+    fromUrl=true;
+    document.getElementById('splash').style.display='none';
+    if(t){
+      // Load trip from Sheets then open app
+      loadTripFromSheets(f,t);
+    } else {
+      enterApp(f,null);
+    }
+  }
+});
 </script>
 </body>
 </html>
