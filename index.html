@@ -545,7 +545,7 @@ function bldLinks(){
   }).join('');
 }
 
-function toggleAcc(id){const el=document.getElementById("acc-"+id),ico=document.getElementById("ico-"+id);if(!el)return;const open=el.style.display!=="none";el.style.display=open?"none":"block";if(ico)ico.style.transform=open?"":"rotate(180deg)";}
+function toggleAcc(id){if(typeof id==="object")id=id;const el=document.getElementById("acc-"+id),ico=document.getElementById("ico-"+id);if(!el)return;const open=el.style.display!=="none";el.style.display=open?"none":"block";if(ico)ico.style.transform=open?"":"rotate(180deg)";}
 
 function shInvTab(tab,btn){
   ['saldo','entrada','salida','movs'].forEach(t=>{
@@ -731,7 +731,7 @@ function renderInv(){
       const tons=(totArena/1000).toFixed(2);
       const uid=bKey+'-'+idx;
       html+='<div style="border-bottom:.5px solid var(--bd);">'+
-        '<div onclick="toggleAcc(''+uid+'')" style="display:flex;justify-content:space-between;align-items:center;padding:11px 0;cursor:pointer;">'+
+        '<div onclick="toggleAcc(this.dataset.id)" data-id="'+uid+'" style="display:flex;justify-content:space-between;align-items:center;padding:11px 0;cursor:pointer;">'+
         '<div class="inm">'+a+'</div>'+
         '<div style="display:flex;align-items:center;gap:8px;">'+
         '<div class="iq" style="text-align:right;">'+totArena.toLocaleString()+' kg<small>'+tons+' ton</small></div>'+
