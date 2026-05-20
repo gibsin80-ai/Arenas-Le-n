@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Arenas y Gravas Leon</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.11.0/dist/tabler-icons.min.css"/>
+<style>
+:root{--bg:#f5f4f0;--sf:#fff;--bd:rgba(0,0,0,.10);--bds:rgba(0,0,0,.18);--tx:#1a1a18;--mu:#6b6b66;--fa:#a0a09a;--sbg:#eaf3de;--stx:#3b6d11;--wbg:#faeeda;--wtx:#854f0b;--ibg:#e6f1fb;--itx:#185fa5;--dbg:#fcebeb;--dtx:#a32d2d;--r:10px;--rs:6px;--fn:system-ui,-apple-system,sans-serif;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--fn);background:var(--bg);min-height:100vh;color:var(--tx);}
+#splash{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1.5rem;}
+.slogo{font-family:Georgia,serif;font-size:22px;text-align:center;margin-bottom:6px;}
+.ssub{font-size:13px;color:var(--mu);text-align:center;margin-bottom:2.5rem;}
+.slbl{font-size:11px;color:var(--fa);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;text-align:center;}
+.cbtn{width:100%;max-width:320px;margin-bottom:10px;background:var(--sf);border:.5px solid var(--bds);border-radius:var(--r);padding:14px 18px;display:flex;align-items:center;gap:12px;cursor:pointer;font-family:var(--fn);text-align:left;}
+.cbtn:hover{background:#f0efe9;}
+.cico{width:36px;height:36px;border-radius:8px;background:var(--bg);border:.5px solid var(--bd);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.cnm{font-size:15px;font-weight:500;}
+.cds{font-size:12px;color:var(--mu);margin-top:1px;}
+.adme{margin-top:1.5rem;font-size:13px;color:var(--fa);cursor:pointer;text-decoration:underline;background:none;border:none;font-family:var(--fn);}
+#app{display:none;max-width:420px;margin:0 auto;}
+.tbar{position:sticky;top:0;z-index:10;background:var(--sf);border-bottom:.5px solid var(--bd);padding:12px 16px;display:flex;align-items:center;gap:10px;}
+.bbtn{background:none;border:none;cursor:pointer;padding:4px;color:var(--mu);font-size:20px;display:flex;}
+.ttl{font-size:15px;font-weight:500;flex:1;}
+.nav{display:flex;background:var(--sf);border-bottom:.5px solid var(--bd);}
+.nbtn{flex:1;padding:10px 4px;font-size:12px;background:transparent;border:none;border-bottom:2px solid transparent;color:var(--mu);cursor:pointer;font-family:var(--fn);}
+.nbtn.active{color:var(--tx);border-bottom-color:var(--tx);font-weight:500;}
+.ct{padding:1rem;}
+.sc{display:none;}
+.sc.active{display:block;}
+.card{background:var(--sf);border:.5px solid var(--bd);border-radius:var(--r);padding:1rem 1.125rem;margin-bottom:1rem;}
+.ctit{font-size:11px;font-weight:500;color:var(--mu);margin-bottom:14px;text-transform:uppercase;letter-spacing:.06em;display:flex;align-items:center;gap:8px;}
+.plbl{display:inline-block;font-size:11px;padding:2px 8px;border-radius:999px;background:var(--ibg);color:var(--itx);font-weight:500;text-transform:none;letter-spacing:0;}
+.fld{margin-bottom:12px;}
+.fld:last-child{margin-bottom:0;}
+.fld label{display:block;font-size:13px;color:var(--mu);margin-bottom:5px;}
+.fld input,.fld select{width:100%;padding:9px 11px;border:.5px solid var(--bds);border-radius:var(--rs);font-size:14px;font-family:var(--fn);background:var(--sf);color:var(--tx);appearance:none;}
+.fld select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px;}
+.fr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;}
+.ntag{font-size:13px;color:var(--stx);background:var(--sbg);padding:7px 10px;border-radius:var(--rs);margin-top:8px;display:none;}
+.sbmt{width:100%;padding:13px;background:var(--tx);color:#fff;border:none;border-radius:var(--r);font-size:14px;font-weight:500;font-family:var(--fn);cursor:pointer;margin-top:4px;display:flex;align-items:center;justify-content:center;gap:8px;}
+.sbmt:disabled{opacity:.5;cursor:not-allowed;}
+.sbmt.sec{background:var(--sf);color:var(--tx);border:.5px solid var(--bds);}
+.sbmt.grn{background:#27500a;}
+.vc{background:var(--sf);border:.5px solid var(--bd);border-radius:var(--r);padding:1rem 1.125rem;margin-bottom:10px;cursor:pointer;}
+.vc:hover{background:#fafaf8;}
+.vtop{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+.vtit{font-size:15px;font-weight:500;}
+.vsub{font-size:12px;color:var(--mu);margin-top:2px;}
+.bdg{display:inline-block;font-size:11px;padding:3px 9px;border-radius:999px;font-weight:500;}
+.b-reg{background:var(--ibg);color:var(--itx);}
+.b-car{background:var(--wbg);color:var(--wtx);}
+.b-ent{background:var(--sbg);color:var(--stx);}
+.stages{display:flex;gap:0;margin-bottom:1rem;border-radius:var(--r);overflow:hidden;border:.5px solid var(--bd);}
+.stage{flex:1;padding:8px 2px;text-align:center;font-size:10px;color:var(--fa);background:var(--sf);border-right:.5px solid var(--bd);line-height:1.3;}
+.stage:last-child{border-right:none;}
+.stage.done{background:var(--sbg);color:var(--stx);}
+.stage.active-s{background:var(--wbg);color:var(--wtx);font-weight:500;}
+.stage i{display:block;font-size:15px;margin-bottom:2px;}
+.det-header{background:var(--sf);border:.5px solid var(--bd);border-radius:var(--r);padding:1.25rem;margin-bottom:1rem;}
+.det-id{font-size:11px;color:var(--fa);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px;}
+.det-title{font-size:18px;font-weight:500;margin-bottom:2px;}
+.det-sub{font-size:13px;color:var(--mu);}
+.qr-box{display:flex;flex-direction:column;align-items:center;padding:1.25rem;background:var(--sf);border:.5px solid var(--bd);border-radius:var(--r);margin-bottom:1rem;}
+.qr-label{font-size:12px;color:var(--mu);margin-top:10px;text-align:center;}
+.res{background:var(--bg);border-radius:var(--rs);padding:12px;}
+.rr{display:flex;justify-content:space-between;font-size:13px;padding:4px 0;color:var(--mu);}
+.rr.tot{font-weight:500;color:var(--tx);border-top:.5px solid var(--bd);margin-top:8px;padding-top:10px;font-size:15px;}
+.dvd{height:.5px;background:var(--bd);margin:12px 0;}
+.ir{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:.5px solid var(--bd);}
+.ir:last-child{border-bottom:none;}
+.inm{font-size:14px;font-weight:500;}
+.isb{font-size:12px;color:var(--mu);}
+.iq{text-align:right;font-size:14px;font-weight:500;}
+.iq small{display:block;font-size:11px;color:var(--mu);font-weight:400;}
+.slb{font-size:11px;color:var(--fa);font-weight:500;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;}
+.alck{text-align:center;padding:2rem 1rem;}
+.alck i{font-size:32px;color:var(--mu);margin-bottom:12px;display:block;}
+.alck p{font-size:13px;color:var(--mu);margin-bottom:16px;}
+.alck input{width:100%;max-width:200px;padding:10px;border:.5px solid var(--bds);border-radius:var(--rs);font-size:16px;text-align:center;letter-spacing:.2em;font-family:var(--fn);margin-bottom:12px;display:block;margin-left:auto;margin-right:auto;}
+.perr{font-size:12px;color:var(--dtx);margin-top:8px;display:none;}
+.linkrow{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:.5px solid var(--bd);gap:8px;}
+.linkrow:last-child{border-bottom:none;}
+.linknm{font-size:13px;font-weight:500;}
+.linkurl{font-size:11px;color:var(--mu);margin-top:2px;word-break:break-all;}
+.copybtn{flex-shrink:0;padding:5px 10px;background:var(--bg);border:.5px solid var(--bds);border-radius:var(--rs);font-size:12px;cursor:pointer;font-family:var(--fn);}
+.inv-tabs{display:flex;border:.5px solid var(--bd);border-radius:var(--r);overflow:hidden;margin-bottom:1rem;}
+.itab{flex:1;padding:9px 4px;font-size:12px;background:var(--sf);color:var(--mu);border:none;border-left:.5px solid var(--bd);cursor:pointer;font-family:var(--fn);}
+.itab:first-child{border-left:none;}
+.itab.active{background:var(--tx);color:#fff;font-weight:500;}
+.acc-row{border-bottom:.5px solid var(--bd);}
+.acc-row:last-child{border-bottom:none;}
+.acc-head{display:flex;justify-content:space-between;align-items:center;padding:11px 0;cursor:pointer;}
+.acc-body{display:none;padding-bottom:10px;}
+.acc-body.open{display:block;}
+.sub-row{display:flex;justify-content:space-between;padding:3px 0 3px 12px;font-size:12px;color:var(--mu);}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<div id="splash">
+  <div class="slogo">Arenas y Gravas Leon</div>
+  <div class="ssub">Sistema de control de cargas</div>
+  <div class="slbl">Selecciona tu empresa</div>
+  <button class="cbtn" id="btn-AER">
+    <div class="cico"><i class="ti ti-truck" style="font-size:18px;color:#6b6b66"></i></div>
+    <div><div class="cnm">AER — Auto Express Rodriguez</div><div class="cds">Ruben · La Cerquilla y Alvarado</div></div>
+  </button>
+  <button class="cbtn" id="btn-Flagga">
+    <div class="cico"><i class="ti ti-truck" style="font-size:18px;color:#6b6b66"></i></div>
+    <div><div class="cnm">Flagga</div><div class="cds">La Cerquilla y Alvarado</div></div>
+  </button>
+  <button class="cbtn" id="btn-Felipe">
+    <div class="cico"><i class="ti ti-truck" style="font-size:18px;color:#6b6b66"></i></div>
+    <div><div class="cnm">Felipe Salazar</div><div class="cds">La Cerquilla y Alvarado</div></div>
+  </button>
+  <button class="adme" id="btn-Admin">
+    <i class="ti ti-lock" style="font-size:13px;"></i> Acceso administrador
+  </button>
+</div>
+
+<div id="app">
+  <div class="tbar">
+    <button class="bbtn" id="backbtn"><i class="ti ti-arrow-left"></i></button>
+    <div class="ttl" id="ttl">—</div>
+    <span class="bdg b-car" id="adi" style="display:none;">Admin</span>
+  </div>
+
+  <div id="alks" class="ct" style="display:none;">
+    <div class="alck">
+      <i class="ti ti-shield-lock"></i>
+      <p>Ingresa tu contrasena de administrador.</p>
+      <input type="password" id="pwdi" placeholder="......"/>
+      <button class="sbmt" style="max-width:200px;margin:0 auto;" id="btn-login">Entrar</button>
+      <div class="perr" id="perr">Contrasena incorrecta</div>
+    </div>
+  </div>
+
+  <nav class="nav" id="mnav" style="display:none;">
+    <button class="nbtn active" id="tab-nvo">Nuevo viaje</button>
+    <button class="nbtn" id="tab-his">Viajes</button>
+    <button class="nbtn" id="invt" style="display:none;">Inventario</button>
+    <button class="nbtn" id="lnkt" style="display:none;">Links</button>
+  </nav>
+
+  <div class="ct" id="mct" style="display:none;">
+
+    <div id="sc-nvo" class="sc active">
+      <div class="card">
+        <div class="ctit">Datos del viaje</div>
+        <div class="fld"><label>Fleteria</label><input type="text" id="fld" readonly style="background:var(--bg);color:var(--mu);"/></div>
+        <div class="fld"><label>Nombre del chofer</label><input type="text" id="chof" placeholder="Nombre completo"/></div>
+        <div class="fld"><label>Placas del camion</label><input type="text" id="plac" placeholder="Ej. 94BE8U"/></div>
+        <div class="fr">
+          <div class="fld" id="orif">
+            <label>Origen</label>
+            <select id="ori">
+              <option value="">Seleccionar...</option>
+              <option value="cerquilla">La Cerquilla, Ver.</option>
+              <option value="alvarado">Alvarado, Ver.</option>
+            </select>
+          </div>
+          <div class="fld"><label>Fecha de carga</label><input type="date" id="fcha"/></div>
+        </div>
+        <div class="fld"><label>Numero de planas</label>
+          <select id="npl">
+            <option value="1">Sencillo — 1 plana</option>
+            <option value="2">Full — 2 planas</option>
+          </select>
+        </div>
+      </div>
+      <div id="plc"></div>
+      <button class="sbmt" id="btn-reg"><i class="ti ti-qrcode"></i> Crear viaje y generar QR</button>
+    </div>
+
+    <div id="sc-his" class="sc"><div id="hisl"></div></div>
+    <div id="sc-det" class="sc"><div id="det-content"></div></div>
+
+    <div id="sc-inv" class="sc">
+      <div class="inv-tabs">
+        <button class="itab active" id="itab-saldo">Saldo</button>
+        <button class="itab" id="itab-entrada">Entrada</button>
+        <button class="itab" id="itab-salida">Salida</button>
+        <button class="itab" id="itab-movs">Historial</button>
+      </div>
+      <div id="inv-tab-saldo"><div id="inv-saldo"></div></div>
+      <div id="inv-tab-entrada" style="display:none;">
+        <div class="card">
+          <div class="ctit">Registrar entrada</div>
+          <div class="fld"><label>Tipo de arena</label>
+            <select id="in-arena">
+              <option value="">Seleccionar...</option>
+              <option>8-16</option><option>20-40/16-30 beige</option><option>40-60</option>
+              <option>70-80 (Planta)</option><option>80-90</option><option>90-100 (Fina)</option>
+              <option>4-8</option><option>1/4-1/2</option><option>1/4-3/8 Davila</option>
+              <option>1/2-3/4</option><option>1/2-1</option><option>16-30 cafe</option>
+            </select>
+          </div>
+          <div class="fr">
+            <div class="fld"><label>Cantidad</label><input type="number" id="in-cant" placeholder="0"/></div>
+            <div class="fld"><label>Unidad</label>
+              <select id="in-unit">
+                <option value="costal50">Costal 50 kg</option>
+                <option value="supersaco2000">Supersaco 2,000 kg</option>
+              </select>
+            </div>
+          </div>
+          <div class="ntag" id="in-preview"></div>
+          <div class="fr" style="margin-top:8px;">
+            <div class="fld"><label>Bodega</label>
+              <select id="in-bodega"><option value="b4">Bodega 4</option><option value="b3">Bodega 3</option></select>
+            </div>
+            <div class="fld"><label>Referencia</label><input type="text" id="in-ref" placeholder="Ej. AER-001"/></div>
+          </div>
+          <button class="sbmt" id="btn-entrada" style="margin-top:8px;"><i class="ti ti-arrow-down-circle"></i> Registrar entrada</button>
+        </div>
+      </div>
+      <div id="inv-tab-salida" style="display:none;">
+        <div class="card">
+          <div class="ctit">Registrar salida</div>
+          <div class="fld"><label>Tipo de arena</label>
+            <select id="out-arena">
+              <option value="">Seleccionar...</option>
+              <option>8-16</option><option>20-40/16-30 beige</option><option>40-60</option>
+              <option>70-80 (Planta)</option><option>80-90</option><option>90-100 (Fina)</option>
+              <option>4-8</option><option>1/4-1/2</option><option>1/4-3/8 Davila</option>
+              <option>1/2-3/4</option><option>1/2-1</option><option>16-30 cafe</option>
+            </select>
+          </div>
+          <div class="fr">
+            <div class="fld"><label>Cantidad</label><input type="number" id="out-cant" placeholder="0"/></div>
+            <div class="fld"><label>Unidad</label>
+              <select id="out-unit">
+                <option value="costal50">Costal 50 kg</option>
+                <option value="costal25">Costal 25 kg</option>
+                <option value="supersaco1500">Supersaco 1,500 kg</option>
+                <option value="supersaco2000">Supersaco 2,000 kg</option>
+                <option value="tonelada">Tonelada</option>
+                <option value="kg">Kilogramo</option>
+              </select>
+            </div>
+          </div>
+          <div class="ntag" id="out-preview"></div>
+          <div class="fr" style="margin-top:8px;">
+            <div class="fld"><label>Bodega</label>
+              <select id="out-bodega"><option value="b4">Bodega 4</option><option value="b3">Bodega 3</option></select>
+            </div>
+            <div class="fld"><label>Cliente</label><input type="text" id="out-cliente" placeholder="Nombre"/></div>
+          </div>
+          <div class="fr">
+            <div class="fld"><label>No. Remision</label><input type="text" id="out-remision" placeholder="Ej. 11371"/></div>
+            <div class="fld"><label>OC cliente</label><input type="text" id="out-oc" placeholder="Opcional"/></div>
+          </div>
+          <button class="sbmt" id="btn-salida" style="margin-top:8px;"><i class="ti ti-arrow-up-circle"></i> Registrar salida</button>
+        </div>
+      </div>
+      <div id="inv-tab-movs" style="display:none;"><div id="inv-movs"></div></div>
+    </div>
+
+    <div id="sc-lnk" class="sc">
+      <div class="slb">Links por fleteria</div>
+      <div class="card" id="linkbox"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+var SU = 'https://script.google.com/macros/s/AKfycbziUdwkT2wbFSwwQbe_QzvNBfKSfy8LmMug6Kx1PI6Uyy6rKfIBRXPcLh2dgqTT8Waa_w/exec';
+var AP = '1234';
+var CR = {
+  AER:   {name:'AER — Auto Express Rodriguez', short:'AER', rutas:['cerquilla','alvarado'], fl:{cerquilla:820,alvarado:770}},
+  Flagga:{name:'Flagga',                        short:'FLG', rutas:['cerquilla','alvarado'], fl:{cerquilla:800,alvarado:800}},
+  Felipe:{name:'Felipe Salazar',                short:'FEL', rutas:['cerquilla','alvarado'], fl:{cerquilla:800,alvarado:800}}
+};
+var AR = {
+  cerquilla:[
+    {l:'8-16',p:900},{l:'20-40/16-30 beige',p:680},{l:'40-60',p:680},
+    {l:'70-80 (Planta)',p:900},{l:'80-90',p:780},{l:'90-100 (Fina)',p:900},
+    {l:'4-8',p:900},{l:'1/4-1/2',p:900},{l:'1/4-3/8 Davila',p:900},
+    {l:'1/2-3/4',p:900},{l:'1/2-1',p:900}
+  ],
+  alvarado:[{l:'16-30 cafe',p:450}]
+};
+var ARENAS_LIST = ['8-16','20-40/16-30 beige','40-60','70-80 (Planta)','80-90','90-100 (Fina)','4-8','1/4-1/2','1/4-3/8 Davila','1/2-3/4','1/2-1','16-30 cafe'];
+var KG_UNIT = {costal50:50,costal25:25,supersaco1500:1500,supersaco2000:2000,tonelada:1000,kg:1};
+var LBL_UNIT = {costal50:'Costal 50 kg',costal25:'Costal 25 kg',supersaco1500:'Supersaco 1,500 kg',supersaco2000:'Supersaco 2,000 kg',tonelada:'Tonelada',kg:'Kilogramo'};
+
+var TRIPS = [];
+var MOVS = [];
+var cc = null, ia = false, fromUrl = false, curTrip = null;
+
+var INV = {b4:{},b3:{}};
+ARENAS_LIST.forEach(function(a){
+  INV.b4[a] = {ss:{pz:0,kg:0},c50:{pz:0,kg:0}};
+  INV.b3[a] = {ss:{pz:0,kg:0},c50:{pz:0,kg:0}};
+});
+INV.b4['40-60'].ss={pz:60,kg:120000}; INV.b4['40-60'].c50={pz:1008,kg:50400};
+INV.b4['70-80 (Planta)'].ss={pz:15,kg:30000}; INV.b4['70-80 (Planta)'].c50={pz:455,kg:22750};
+INV.b4['20-40/16-30 beige'].ss={pz:32,kg:64000}; INV.b4['20-40/16-30 beige'].c50={pz:1600,kg:80000};
+INV.b4['8-16'].ss={pz:6,kg:12000};
+INV.b4['16-30 cafe'].ss={pz:9,kg:18000};
+INV.b3['40-60'].ss={pz:16,kg:32000};
+INV.b3['90-100 (Fina)'].ss={pz:46,kg:92000};
+INV.b3['20-40/16-30 beige'].ss={pz:70,kg:140000};
+INV.b3['16-30 cafe'].ss={pz:36.5,kg:73000};
+INV.b3['4-8'].ss={pz:10,kg:20000};
+INV.b3['1/4-3/8 Davila'].ss={pz:13,kg:26000};
+
+function genID(c){
+  var d=new Date(),pad=function(n){return String(n).padStart(2,'0');};
+  var dt=pad(d.getDate())+pad(d.getMonth()+1)+String(d.getFullYear()).slice(2);
+  var seq=String(TRIPS.filter(function(t){return t.carrier===c;}).length+1).padStart(3,'0');
+  return (CR[c]?CR[c].short:'ADM')+'-'+dt+'-'+seq;
+}
+
+function enterApp(c,tripId){
+  cc=c;
+  document.getElementById('splash').style.display='none';
+  document.getElementById('app').style.display='block';
+  document.getElementById('backbtn').style.display=fromUrl?'none':'flex';
+  if(c==='Admin'){
+    document.getElementById('ttl').textContent='Administrador';
+    document.getElementById('alks').style.display='block';
+    document.getElementById('mnav').style.display='none';
+    document.getElementById('mct').style.display='none';
+  } else {
+    setupC(c);
+    if(tripId){
+      var trip=TRIPS.find(function(t){return t.id===tripId;});
+      if(trip) setTimeout(function(){showDet(trip);},200);
+      else loadTripFromSheets(c,tripId);
+    }
+  }
+}
+
+function setupC(c){
+  var cr=CR[c];
+  document.getElementById('ttl').textContent=cr.name.split('—')[0].trim();
+  document.getElementById('fld').value=cr.name;
+  document.getElementById('alks').style.display='none';
+  document.getElementById('mnav').style.display='flex';
+  document.getElementById('mct').style.display='block';
+  document.getElementById('invt').style.display='none';
+  document.getElementById('lnkt').style.display='none';
+  document.getElementById('adi').style.display='none';
+  document.getElementById('fcha').value=new Date().toISOString().split('T')[0];
+  rndrPl(); bldHis(); shSc('nvo');
+  document.querySelectorAll('.nbtn').forEach(function(b){b.classList.remove('active');});
+  document.getElementById('tab-nvo').classList.add('active');
+}
+
+function chkPwd(){
+  if(document.getElementById('pwdi').value===AP){
+    ia=true; cc='Admin';
+    document.getElementById('alks').style.display='none';
+    document.getElementById('mnav').style.display='flex';
+    document.getElementById('mct').style.display='block';
+    document.getElementById('invt').style.display='block';
+    document.getElementById('lnkt').style.display='block';
+    document.getElementById('adi').style.display='inline-block';
+    document.getElementById('fld').value='Todos los proveedores';
+    document.getElementById('ttl').textContent='Panel admin';
+    document.getElementById('perr').style.display='none';
+    bldLinks(); rndrPl(); renderInv();
+    document.querySelectorAll('.nbtn').forEach(function(b){b.classList.remove('active');});
+    document.getElementById('tab-his').classList.add('active');
+    shSc('his');
+    loadAllFromSheets();
+  } else {
+    document.getElementById('perr').style.display='block';
+  }
+}
+
+function gOri(){return document.getElementById('ori').value||'cerquilla';}
+
+function aOpts(o){
+  var l=AR[o]||AR.cerquilla;
+  return '<option value="">Seleccionar...</option>'+l.map(function(a){
+    return '<option value="'+a.p+'" data-l="'+a.l+'">'+a.l+'</option>';
+  }).join('');
+}
+
+function rndrPl(){
+  var n=parseInt(document.getElementById('npl').value)||1;
+  var o=gOri();
+  var c=document.getElementById('plc');
+  c.innerHTML='';
+  for(var i=1;i<=n;i++){
+    var d=document.createElement('div');
+    d.className='card';
+    d.innerHTML='<div class="ctit"><span class="plbl">Plana '+i+'</span>&nbsp; Material</div>'+
+      '<div class="fld"><label>Tipo de arena</label><select id="ar'+i+'">'+aOpts(o)+'</select></div>'+
+      '<div class="fld"><label>Formato</label><select id="fm'+i+'"><option value="">Seleccionar...</option><option value="costal">Costal 50 kg</option><option value="supersaco">Supersaco 2,000 kg</option></select></div>'+
+      '<div class="fld"><label>Piezas</label><input type="number" id="pz'+i+'" placeholder="Ej. 20"/></div>';
+    c.appendChild(d);
+  }
+}
+
+async function regViaje(){
+  var ch=document.getElementById('chof').value.trim();
+  var pl=document.getElementById('plac').value.trim();
+  var fe=document.getElementById('fcha').value;
+  var o=gOri();
+  var n=parseInt(document.getElementById('npl').value)||1;
+  if(!ch||!pl||!o){shT('Completa los campos obligatorios','e');return;}
+  var pls=[];
+  for(var i=1;i<=n;i++){
+    var s=document.getElementById('ar'+i);
+    var al=s.options[s.selectedIndex]?s.options[s.selectedIndex].getAttribute('data-l')||'':'';
+    var pa=parseFloat(s.value)||0;
+    pls.push({plana:i,arena:al,precioArena:pa,formato:document.getElementById('fm'+i).value,piezas:document.getElementById('pz'+i).value||''});
+  }
+  var carrier=cc==='Admin'?'AER':cc;
+  var id=genID(carrier);
+  var pf=CR[carrier]?CR[carrier].fl[o]||0:0;
+  var trip={id:id,carrier:carrier,fletera:ia?'Admin':CR[cc].name,chofer:ch,placas:pl.toUpperCase(),fecha:fe,origen:o,numPlanas:n,planas:pls,precioFlete:pf,status:'Registrado',basculaSalida:null,basculaLlegada:null,pesoNeto:null,costoArena:null,costoFlete:null,costoTotal:null};
+  TRIPS.unshift(trip);
+  var btn=document.getElementById('btn-reg');
+  btn.disabled=true;
+  btn.innerHTML='<i class="ti ti-loader" style="animation:spin 1s linear infinite"></i> Guardando...';
+  try{
+    await fetch(SU,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({fecha:fe,fletera:trip.fletera,chofer:ch,placas:trip.placas,
+        origen:o==='cerquilla'?'La Cerquilla, Ver.':'Alvarado, Ver.',
+        numPlanas:n,planas:JSON.stringify(pls),tripId:id,status:'Registrado',pesoNetoTotal:0})});
+  }catch(e){}
+  btn.disabled=false;
+  btn.innerHTML='<i class="ti ti-qrcode"></i> Crear viaje y generar QR';
+  document.getElementById('chof').value='';
+  document.getElementById('plac').value='';
+  rndrPl(); bldHis();
+  shT('Viaje '+id+' creado','o');
+  showDet(trip);
+}
+
+function showDet(trip){
+  curTrip=trip;
+  var ori=trip.origen==='cerquilla'?'La Cerquilla':'Alvarado';
+  var stages=[{l:'Registrado',i:'ti-file-plus'},{l:'Cargado',i:'ti-package'},{l:'En transito',i:'ti-truck'},{l:'Entregado',i:'ti-circle-check'}];
+  var stIdx=stages.findIndex(function(s){return s.l===trip.status;});
+  var stHTML=stages.map(function(s,i){
+    var cls=i<stIdx?'done':i===stIdx?'active-s':'';
+    return '<div class="stage '+cls+'"><i class="ti '+s.i+'"></i>'+s.l+'</div>';
+  }).join('');
+  var base=window.location.href.split('?')[0];
+  var tripUrl=base+'?f='+(trip.carrier==='Admin'?'AER':trip.carrier)+'&trip='+trip.id;
+  var plHTML=trip.planas.map(function(p,i){
+    return '<div style="padding:8px 0;'+(i>0?'border-top:.5px solid var(--bd)':'')+'">'+
+      '<div style="display:flex;align-items:center;gap:6px;"><span class="plbl">Plana '+p.plana+'</span>'+
+      '<span style="font-size:13px;color:var(--mu);">'+p.arena+(p.piezas?' · '+p.piezas+' '+p.formato+'s':'')+'</span></div></div>';
+  }).join('');
+  var actionHTML='';
+  if(trip.status==='Registrado'){
+    actionHTML='<div class="card"><div class="ctit"><span style="background:var(--wbg);color:var(--wtx);padding:3px 10px;border-radius:999px;font-size:11px;">Etapa 2 — Bascula de salida</span></div>'+
+      '<p style="font-size:13px;color:var(--mu);margin-bottom:14px;">Captura el peso del camion cargado antes de salir de origen.</p>'+
+      '<div class="fr"><div class="fld"><label>Peso bruto (kg)</label><input type="number" id="e2-bruto" placeholder="Cargado"/></div>'+
+      '<div class="fld"><label>Tara aprox. (kg)</label><input type="number" id="e2-tara" placeholder="Vacio"/></div></div>'+
+      '<button class="sbmt" id="btn-cargado" style="margin-top:12px;"><i class="ti ti-truck"></i> Confirmar carga — en transito</button></div>';
+  } else if(trip.status==='Cargado'||trip.status==='En transito'){
+    actionHTML='<div class="card"><div class="ctit"><span style="background:var(--ibg);color:var(--itx);padding:3px 10px;border-radius:999px;font-size:11px;">Etapa 3 — Bascula de llegada</span></div>'+
+      '<p style="font-size:13px;color:var(--mu);margin-bottom:14px;">Ingresa peso bruto de salida y tara real despues de descargar.</p>'+
+      '<div class="fr"><div class="fld"><label>Peso bruto salida (kg)</label><input type="number" id="e3-bruto" placeholder="Ticket salida" value="'+(trip.basculaSalida?trip.basculaSalida.bruto:'')+'"/></div>'+
+      '<div class="fld"><label>Tara real vacio (kg)</label><input type="number" id="e3-tara" placeholder="Vacio"/></div></div>'+
+      '<div class="ntag" id="e3-neto"></div>'+
+      '<div id="e3-costos" style="display:none;margin-top:10px;"></div>'+
+      '<button class="sbmt grn" id="btn-entregado" style="margin-top:12px;"><i class="ti ti-circle-check"></i> Confirmar entrega y cerrar viaje</button></div>';
+  } else if(trip.status==='Entregado'){
+    var tons=(trip.pesoNeto/1000).toFixed(2);
+    actionHTML='<div class="card"><div class="ctit">Resumen final <span class="bdg b-ent" style="margin-left:6px;">Entregado</span></div>'+
+      '<div class="res">'+
+      '<div class="rr"><span>Peso neto final</span><span>'+Number(trip.pesoNeto).toLocaleString()+' kg = '+tons+' ton</span></div>'+
+      '<div class="rr"><span>Costo arena</span><span>$'+Number(trip.costoArena).toLocaleString('es-MX',{maximumFractionDigits:0})+'</span></div>'+
+      '<div class="rr"><span>Flete ($'+trip.precioFlete+'/ton)</span><span>$'+Number(trip.costoFlete).toLocaleString('es-MX',{maximumFractionDigits:0})+'</span></div>'+
+      '<div class="rr tot"><span>Total</span><span>$'+Number(trip.costoTotal).toLocaleString('es-MX',{maximumFractionDigits:0})+'</span></div></div></div>';
+  }
+  document.getElementById('det-content').innerHTML=
+    '<div class="det-header"><div class="det-id">'+trip.id+'</div><div class="det-title">'+trip.chofer+'</div>'+
+    '<div class="det-sub">'+ori+' → Bodega &nbsp;·&nbsp; '+trip.fecha+' &nbsp;·&nbsp; '+trip.placas+'</div></div>'+
+    '<div class="stages">'+stHTML+'</div>'+
+    '<div class="qr-box"><img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data='+encodeURIComponent(tripUrl)+'" width="180" height="180" style="border-radius:6px;"/>'+
+    '<div class="qr-label">Escanea para ver o actualizar este viaje</div>'+
+    '<button class="sbmt sec" id="btn-copylink" style="width:auto;padding:8px 16px;font-size:13px;margin-top:10px;"><i class="ti ti-link"></i> Copiar link</button></div>'+
+    '<div class="card"><div class="ctit">Material</div>'+plHTML+'</div>'+
+    actionHTML+
+    '<button class="sbmt sec" id="btn-back-viajes" style="margin-top:4px;"><i class="ti ti-arrow-left"></i> Volver a viajes</button>';
+  shSc('det');
+  setTimeout(function(){
+    var el;
+    el=document.getElementById('btn-copylink');
+    if(el) el.addEventListener('click',function(){navigator.clipboard.writeText(tripUrl).then(function(){shT('Link copiado','o');});});
+    el=document.getElementById('btn-back-viajes');
+    if(el) el.addEventListener('click',function(){shSc('his');});
+    el=document.getElementById('btn-cargado');
+    if(el) el.addEventListener('click',function(){updSt('Cargado');});
+    el=document.getElementById('btn-entregado');
+    if(el){
+      el.addEventListener('click',function(){updSt('Entregado');});
+      var e3b=document.getElementById('e3-bruto');
+      var e3t=document.getElementById('e3-tara');
+      if(e3b) e3b.addEventListener('input',prvNetoFinal);
+      if(e3t) e3t.addEventListener('input',prvNetoFinal);
+    }
+  },50);
+}
+
+function prvNetoFinal(){
+  var b=parseFloat(document.getElementById('e3-bruto').value)||0;
+  var t=parseFloat(document.getElementById('e3-tara').value)||0;
+  var n=Math.max(0,b-t);
+  var tg=document.getElementById('e3-neto');
+  if(n>0){
+    tg.textContent='Peso neto: '+n.toLocaleString()+' kg = '+(n/1000).toFixed(2)+' ton';
+    tg.style.display='block';
+    if(curTrip){
+      var tons=n/1000,tpp=tons/curTrip.planas.length;
+      var ca=curTrip.planas.reduce(function(s,p){return s+tpp*p.precioArena;},0);
+      var cf=tons*curTrip.precioFlete;
+      var el=document.getElementById('e3-costos');
+      if(el){el.style.display='block';el.innerHTML='<div class="res"><div class="rr"><span>Costo arena est.</span><span>$'+ca.toLocaleString('es-MX',{maximumFractionDigits:0})+'</span></div><div class="rr"><span>Costo flete</span><span>$'+cf.toLocaleString('es-MX',{maximumFractionDigits:0})+'</span></div><div class="rr tot"><span>Total</span><span>$'+(ca+cf).toLocaleString('es-MX',{maximumFractionDigits:0})+'</span></div></div>';}
+    }
+  } else tg.style.display='none';
+}
+
+async function updSt(st){
+  if(!curTrip)return;
+  var t=curTrip;
+  if(st==='Cargado'){
+    var b=parseFloat(document.getElementById('e2-bruto').value)||0;
+    var ta=parseFloat(document.getElementById('e2-tara').value)||0;
+    if(!b){shT('Ingresa el peso bruto','e');return;}
+    t.basculaSalida={bruto:b,tara:ta}; t.status='En transito';
+  } else if(st==='Entregado'){
+    var b2=parseFloat(document.getElementById('e3-bruto').value)||0;
+    var ta2=parseFloat(document.getElementById('e3-tara').value)||0;
+    if(!b2||!ta2){shT('Ingresa peso bruto y tara','e');return;}
+    var neto=Math.max(0,b2-ta2),tons=neto/1000;
+    var tpp=tons/t.planas.length;
+    var ca=t.planas.reduce(function(s,p){return s+tpp*p.precioArena;},0);
+    var cf=tons*t.precioFlete;
+    t.basculaLlegada={bruto:b2,tara:ta2}; t.pesoNeto=neto; t.costoArena=ca; t.costoFlete=cf; t.costoTotal=ca+cf; t.status='Entregado';
+    entradaDesdeViaje(t);
+  }
+  try{
+    await fetch(SU,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({accion:'updateStatus',tripId:t.id,status:t.status,
+        basculaBruto:t.basculaLlegada?t.basculaLlegada.bruto:t.basculaSalida?t.basculaSalida.bruto:0,
+        basculaTara:t.basculaLlegada?t.basculaLlegada.tara:t.basculaSalida?t.basculaSalida.tara:0,
+        pesoNeto:t.pesoNeto||0,costoArena:t.costoArena||0,costoFlete:t.costoFlete||0,costoTotal:t.costoTotal||0})});
+  }catch(e){}
+  shT('Estatus: '+t.status,'o'); bldHis(); showDet(t);
+}
+
+function entradaDesdeViaje(trip){
+  var bod=prompt('A que bodega entra este material?\n1 = Bodega 4\n2 = Bodega 3','1');
+  var bodKey=bod==='2'?'b3':'b4';
+  var bName=bodKey==='b4'?'Bodega 4':'Bodega 3';
+  trip.planas.forEach(function(p){
+    if(!p.arena)return;
+    var pzs=parseFloat(p.piezas)||0;
+    var esSS=p.formato==='supersaco';
+    var kgU=esSS?2000:50;
+    var kg=pzs*kgU;
+    if(kg>0){
+      if(!INV[bodKey][p.arena])INV[bodKey][p.arena]={ss:{pz:0,kg:0},c50:{pz:0,kg:0}};
+      if(esSS){INV[bodKey][p.arena].ss.pz+=pzs;INV[bodKey][p.arena].ss.kg+=kg;}
+      else{INV[bodKey][p.arena].c50.pz+=pzs;INV[bodKey][p.arena].c50.kg+=kg;}
+      MOVS.unshift({tipo:'entrada',bodega:bName,arena:p.arena,kg:kg,unidad:esSS?'Supersaco 2,000 kg':'Costal 50 kg',cant:pzs,ref:trip.id,ts:new Date().toLocaleString('es-MX')});
+    }
+  });
+  renderInv(); shT('Material ingresado a '+bName,'o');
+}
+
+async function loadTripFromSheets(carrier,tripId){
+  try{
+    var res=await fetch(SU+'?tripId='+encodeURIComponent(tripId));
+    var rows=await res.json();
+    if(rows&&rows.length>0){
+      var r=rows[0];
+      var oriKey=r['Origen']&&r['Origen'].includes('Alvarado')?'alvarado':'cerquilla';
+      var planas=rows.map(function(row){
+        var arena=row['Arena']||'';
+        var match=AR[oriKey]?AR[oriKey].find(function(a){return a.l===arena;}):null;
+        return {plana:row['Planas']||1,arena:arena,formato:row['Formato']||'',piezas:row['Piezas']||'',precioArena:match?match.p:0};
+      });
+      var carrierKey=Object.keys(CR).find(function(k){return CR[k].name===r['Fletera'];})||carrier;
+      var pf=CR[carrierKey]?CR[carrierKey].fl[oriKey]||0:0;
+      var trip={id:r['Trip ID']||tripId,carrier:carrierKey,fletera:r['Fletera'],chofer:r['Chofer'],placas:r['Placas'],fecha:r['Fecha'],origen:oriKey,numPlanas:rows.length,planas:planas,precioFlete:pf,status:r['Status']||'Registrado',basculaSalida:null,basculaLlegada:null,pesoNeto:null,costoArena:null,costoFlete:null,costoTotal:null};
+      TRIPS.unshift(trip);
+      enterApp(carrierKey,null);
+      setTimeout(function(){showDet(trip);},200);
+    } else {enterApp(carrier,null);shT('Viaje no encontrado','e');}
+  }catch(e){enterApp(carrier,null);}
+}
+
+function bldHis(){
+  var list=document.getElementById('hisl');
+  var trips=ia?TRIPS:TRIPS.filter(function(t){return t.carrier===cc;});
+  var stBdg={'Registrado':'b-reg','Cargado':'b-car','En transito':'b-car','Entregado':'b-ent'};
+  if(!trips.length){list.innerHTML='<p style="color:var(--fa);font-size:13px;text-align:center;padding:2rem 0;">Sin viajes aun.<br>Crea uno en Nuevo viaje.</p>';return;}
+  list.innerHTML=trips.map(function(v){
+    var ori=v.origen==='cerquilla'?'La Cerquilla':'Alvarado';
+    var mat=v.planas.map(function(p){return p.arena;}).join(' + ');
+    return '<div class="vc" data-id="'+v.id+'">'+
+      '<div class="vtop"><div><div class="vtit">'+v.chofer+'</div><div class="vsub">'+ori+' → Bodega · '+v.fecha+'</div></div>'+
+      '<span class="bdg '+(stBdg[v.status]||'b-reg')+'">'+v.status+'</span></div>'+
+      '<div style="font-size:13px;color:var(--mu);margin:4px 0;">'+mat+'</div>'+
+      '<div style="font-size:11px;color:var(--fa);">'+v.id+' · '+v.placas+'</div></div>';
+  }).join('');
+  list.querySelectorAll('.vc').forEach(function(el){
+    el.addEventListener('click',function(){
+      var id=this.dataset.id;
+      var trip=TRIPS.find(function(t){return t.id===id;});
+      if(trip) showDet(trip);
+    });
+  });
+}
+
+function bldLinks(){
+  var base=window.location.href.split('?')[0];
+  var links=[{name:'AER — Auto Express Rodriguez',key:'AER'},{name:'Flagga',key:'Flagga'},{name:'Felipe Salazar',key:'Felipe'},{name:'Administrador',key:'Admin'}];
+  document.getElementById('linkbox').innerHTML=links.map(function(l){
+    var url=base+'?f='+l.key;
+    return '<div class="linkrow"><div><div class="linknm">'+l.name+'</div><div class="linkurl">'+url+'</div></div>'+
+      '<button class="copybtn" data-url="'+url+'"><i class="ti ti-copy" style="font-size:13px;"></i></button></div>';
+  }).join('');
+  document.getElementById('linkbox').querySelectorAll('.copybtn').forEach(function(btn){
+    btn.addEventListener('click',function(){navigator.clipboard.writeText(this.dataset.url).then(function(){shT('Copiado','o');});});
+  });
+}
+
+function renderInv(){
+  var el=document.getElementById('inv-saldo');
+  if(!el)return;
+  function fmtRow(lbl,pz,kg){
+    if(pz<=0)return '';
+    return '<div class="sub-row"><span>'+lbl+'</span><span>'+Math.round(pz)+' pzas · '+kg.toLocaleString()+' kg</span></div>';
+  }
+  function bldTable(bKey,bName){
+    var html='',totalKg=0;
+    ARENAS_LIST.forEach(function(a,idx){
+      var ss=INV[bKey][a]?INV[bKey][a].ss:{pz:0,kg:0};
+      var c50=INV[bKey][a]?INV[bKey][a].c50:{pz:0,kg:0};
+      var tot=ss.kg+c50.kg; totalKg+=tot;
+      var tons=(tot/1000).toFixed(2),uid=bKey+idx;
+      var dimmed=tot<=0?'opacity:0.4;':'' ;
+      var cero=tot<=0?'<span style="font-size:11px;color:var(--dtx);background:var(--dbg);padding:2px 7px;border-radius:999px;margin-left:6px;">Sin stock</span>':'';
+      html+='<div class="acc-row" style="'+dimmed+'">'+
+        '<div class="acc-head" data-uid="'+uid+'">'+
+        '<div class="inm">'+a+cero+'</div>'+
+        '<div style="display:flex;align-items:center;gap:8px;">'+
+        '<div class="iq">'+tot.toLocaleString()+' kg<small>'+tons+' ton</small></div>'+
+        '<i class="ti ti-chevron-down" style="font-size:14px;color:var(--fa);" id="ico-'+uid+'"></i></div></div>'+
+        '<div class="acc-body" id="body-'+uid+'">'+fmtRow('Supersacos 2,000 kg',ss.pz,ss.kg)+fmtRow('Costales 50 kg',c50.pz,c50.kg)+'</div></div>';
+    });
+    return '<div style="font-size:11px;font-weight:500;color:var(--fa);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">'+bName+'</div>'+
+      '<div class="card" style="margin-bottom:1rem;">'+html+
+      '<div style="display:flex;justify-content:space-between;padding:10px 0 2px;border-top:.5px solid var(--bds);"><div class="inm">Total bodega</div><div class="iq">'+totalKg.toLocaleString()+' kg<small>'+(totalKg/1000).toFixed(1)+' ton</small></div></div></div>';
+  }
+  function bldCombinado(){
+    var html='',totalKg=0;
+    ARENAS_LIST.forEach(function(a,idx){
+      var ss4=INV.b4[a]?INV.b4[a].ss:{pz:0,kg:0},c4=INV.b4[a]?INV.b4[a].c50:{pz:0,kg:0};
+      var ss3=INV.b3[a]?INV.b3[a].ss:{pz:0,kg:0},c3=INV.b3[a]?INV.b3[a].c50:{pz:0,kg:0};
+      var ssTot={pz:ss4.pz+ss3.pz,kg:ss4.kg+ss3.kg},c50Tot={pz:c4.pz+c3.pz,kg:c4.kg+c3.kg};
+      var tot=ssTot.kg+c50Tot.kg; totalKg+=tot;
+      var tons=(tot/1000).toFixed(2),uid='comb'+idx;
+      var dimC=tot<=0?'opacity:0.4;':'';
+      var ceroC=tot<=0?'<span style="font-size:11px;color:var(--dtx);background:var(--dbg);padding:2px 7px;border-radius:999px;margin-left:6px;">Sin stock</span>':'';
+      html+='<div class="acc-row" style="'+dimC+'">'+
+        '<div class="acc-head" data-uid="'+uid+'">'+
+        '<div class="inm">'+a+ceroC+'</div>'+
+        '<div style="display:flex;align-items:center;gap:8px;">'+
+        '<div class="iq">'+tot.toLocaleString()+' kg<small>'+tons+' ton</small></div>'+
+        '<i class="ti ti-chevron-down" style="font-size:14px;color:var(--fa);" id="ico-'+uid+'"></i></div></div>'+
+        '<div class="acc-body" id="body-'+uid+'">'+fmtRow('Supersacos 2,000 kg',ssTot.pz,ssTot.kg)+fmtRow('Costales 50 kg',c50Tot.pz,c50Tot.kg)+'</div></div>';
+    });
+    return '<div style="font-size:11px;font-weight:500;color:var(--fa);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Total combinado</div>'+
+      '<div class="card" style="margin-bottom:1rem;">'+html+
+      '<div style="display:flex;justify-content:space-between;padding:10px 0 2px;border-top:.5px solid var(--bds);"><div class="inm">Total general</div><div class="iq">'+totalKg.toLocaleString()+' kg<small>'+(totalKg/1000).toFixed(1)+' ton</small></div></div></div>';
+  }
+  el.innerHTML=bldTable('b4','Bodega 4')+bldTable('b3','Bodega 3')+bldCombinado();
+  el.querySelectorAll('.acc-head').forEach(function(h){
+    h.addEventListener('click',function(){
+      var uid=this.dataset.uid;
+      var body=document.getElementById('body-'+uid);
+      var ico=document.getElementById('ico-'+uid);
+      if(!body)return;
+      var open=body.classList.contains('open');
+      body.classList.toggle('open',!open);
+      if(ico)ico.style.transform=open?'':'rotate(180deg)';
+    });
+  });
+}
+
+function renderMovs(){
+  var mv=document.getElementById('inv-movs');
+  if(!mv)return;
+  if(!MOVS.length){mv.innerHTML='<p style="font-size:13px;color:var(--fa);text-align:center;padding:1rem 0;">Sin movimientos aun.</p>';return;}
+  mv.innerHTML=MOVS.slice(0,20).map(function(m){
+    var col=m.tipo==='entrada'?'var(--stx)':'var(--dtx)',bg=m.tipo==='entrada'?'var(--sbg)':'var(--dbg)';
+    return '<div class="card" style="margin-bottom:8px;padding:.75rem 1rem;">'+
+      '<div style="display:flex;justify-content:space-between;align-items:center;">'+
+      '<div style="display:flex;align-items:center;gap:6px;">'+
+      '<span style="background:'+bg+';color:'+col+';padding:3px 8px;border-radius:999px;font-size:11px;font-weight:500;">'+m.tipo+'</span>'+
+      '<span style="font-size:13px;font-weight:500;">'+m.arena+'</span>'+
+      '<span style="font-size:11px;color:var(--mu);">'+m.bodega+'</span></div>'+
+      '<span style="font-size:13px;font-weight:500;color:'+col+';">'+(m.tipo==='salida'?'-':'+')+m.kg.toLocaleString()+' kg</span></div>'+
+      '<div style="font-size:12px;color:var(--mu);margin-top:4px;">'+m.cant+' '+m.unidad+(m.ref?' · '+m.ref:'')+'</div>'+
+      '<div style="font-size:11px;color:var(--fa);margin-top:2px;">'+m.ts+'</div></div>';
+  }).join('');
+}
+
+function regEntrada(){
+  var arena=document.getElementById('in-arena').value;
+  var cant=parseFloat(document.getElementById('in-cant').value)||0;
+  var unit=document.getElementById('in-unit').value;
+  var ref=document.getElementById('in-ref').value.trim();
+  var bod=document.getElementById('in-bodega').value;
+  if(!arena||!cant){shT('Completa arena y cantidad','e');return;}
+  var kg=cant*(KG_UNIT[unit]||1);
+  var esSS=unit.startsWith('supersaco');
+  if(!INV[bod][arena])INV[bod][arena]={ss:{pz:0,kg:0},c50:{pz:0,kg:0}};
+  if(esSS){INV[bod][arena].ss.pz+=cant;INV[bod][arena].ss.kg+=kg;}
+  else{INV[bod][arena].c50.pz+=cant;INV[bod][arena].c50.kg+=kg;}
+  var bName=bod==='b4'?'Bodega 4':'Bodega 3';
+  MOVS.unshift({tipo:'entrada',bodega:bName,arena:arena,kg:kg,unidad:LBL_UNIT[unit]||unit,cant:cant,ref:ref,ts:new Date().toLocaleString('es-MX')});
+  document.getElementById('in-cant').value='';
+  document.getElementById('in-ref').value='';
+  document.getElementById('in-preview').style.display='none';
+  fetch(SU,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({accion:'inventario',tipo:'entrada',bodega:bName,arena:arena,kg:kg,unidad:LBL_UNIT[unit]||unit,cant:cant,ref:ref,fecha:new Date().toLocaleDateString('es-MX')})}).catch(function(){});
+  renderInv(); shT('Entrada: '+cant+' '+(LBL_UNIT[unit]||unit)+' de '+arena,'o');
+}
+
+function regSalida(){
+  var arena=document.getElementById('out-arena').value;
+  var cant=parseFloat(document.getElementById('out-cant').value)||0;
+  var unit=document.getElementById('out-unit').value;
+  var cliente=document.getElementById('out-cliente').value.trim();
+  var remision=document.getElementById('out-remision').value.trim();
+  var oc=document.getElementById('out-oc').value.trim();
+  var bod=document.getElementById('out-bodega').value;
+  if(!arena||!cant){shT('Completa arena y cantidad','e');return;}
+  var kg=cant*(KG_UNIT[unit]||1);
+  var bName=bod==='b4'?'Bodega 4':'Bodega 3';
+  if(!INV[bod][arena])INV[bod][arena]={ss:{pz:0,kg:0},c50:{pz:0,kg:0}};
+  var totalDisp=(INV[bod][arena].ss.kg||0)+(INV[bod][arena].c50.kg||0);
+  if(totalDisp<kg){shT('Saldo insuficiente de '+arena+' en '+bName,'e');return;}
+  var esSS=unit.startsWith('supersaco');
+  if(esSS){INV[bod][arena].ss.pz-=cant;INV[bod][arena].ss.kg-=kg;}
+  else{
+    var dispC=INV[bod][arena].c50.kg||0;
+    if(dispC>=kg){INV[bod][arena].c50.pz-=cant;INV[bod][arena].c50.kg-=kg;}
+    else{INV[bod][arena].c50={pz:0,kg:0};var rest=kg-dispC;INV[bod][arena].ss.kg-=rest;INV[bod][arena].ss.pz-=Math.ceil(rest/2000);}
+  }
+  MOVS.unshift({tipo:'salida',bodega:bName,arena:arena,kg:kg,unidad:LBL_UNIT[unit]||unit,cant:cant,ref:cliente,remision:remision,oc:oc,ts:new Date().toLocaleString('es-MX')});
+  document.getElementById('out-cant').value='';
+  document.getElementById('out-cliente').value='';
+  document.getElementById('out-remision').value='';
+  document.getElementById('out-oc').value='';
+  document.getElementById('out-preview').style.display='none';
+  fetch(SU,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({accion:'inventario',tipo:'salida',bodega:bName,arena:arena,kg:kg,unidad:LBL_UNIT[unit]||unit,cant:cant,ref:cliente+' Rem:'+remision+' OC:'+oc,fecha:new Date().toLocaleDateString('es-MX')})}).catch(function(){});
+  renderInv(); shT('Salida: '+cant+' '+(LBL_UNIT[unit]||unit)+' de '+arena,'o');
+}
+
+function shSc(id){
+  document.querySelectorAll('.sc').forEach(function(s){s.classList.remove('active');});
+  var el=document.getElementById('sc-'+id);
+  if(el)el.classList.add('active');
+}
+
+function shInvTab(tab){
+  ['saldo','entrada','salida','movs'].forEach(function(t){
+    var el=document.getElementById('inv-tab-'+t);
+    if(el)el.style.display=t===tab?'block':'none';
+  });
+  document.querySelectorAll('.itab').forEach(function(b){b.classList.toggle('active',b.id==='itab-'+tab);});
+  if(tab==='saldo')renderInv();
+  if(tab==='movs')renderMovs();
+}
+
+function shT(msg,type){
+  var t=document.getElementById('tst');
+  if(!t){t=document.createElement('div');t.id='tst';t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);padding:12px 20px;border-radius:10px;font-size:14px;font-weight:500;z-index:999;transition:opacity .3s;max-width:300px;text-align:center;';document.body.appendChild(t);}
+  t.textContent=msg;t.style.background=type==='o'?'var(--sbg)':'var(--dbg)';t.style.color=type==='o'?'var(--stx)':'var(--dtx)';t.style.opacity='1';
+  setTimeout(function(){t.style.opacity='0';},3000);
+}
+
+async function loadAllFromSheets(){
+  try {
+    // Load all trips
+    var res = await fetch(SU);
+    var rows = await res.json();
+    if(!rows||!rows.length) { bldHis(); return; }
+    // Group rows by Trip ID
+    var tripMap = {};
+    rows.forEach(function(r){
+      var id = r['Trip ID'];
+      if(!id) return;
+      if(!tripMap[id]) tripMap[id] = [];
+      tripMap[id].push(r);
+    });
+    // Reconstruct trip objects
+    Object.keys(tripMap).forEach(function(id){
+      if(TRIPS.find(function(t){return t.id===id;})) return; // already loaded
+      var tripRows = tripMap[id];
+      var r = tripRows[0];
+      var oriKey = r['Origen']&&r['Origen'].includes('Alvarado')?'alvarado':'cerquilla';
+      var planas = tripRows.map(function(row){
+        var arena = row['Arena']||'';
+        var match = AR[oriKey]?AR[oriKey].find(function(a){return a.l===arena;}):null;
+        return {plana:row['Planas']||1,arena:arena,formato:row['Formato']||'',piezas:row['Piezas']||'',precioArena:match?match.p:0};
+      });
+      var carrierKey = Object.keys(CR).find(function(k){return CR[k].name===r['Fletera'];})||'AER';
+      var pf = CR[carrierKey]?CR[carrierKey].fl[oriKey]||0:0;
+      var status = r['Status']||'Registrado';
+      var pesoNeto = parseFloat(r['Peso Neto Final'])||0;
+      var costoArena = parseFloat(r['Costo Arena'])||0;
+      var costoFlete = parseFloat(r['Costo Flete'])||0;
+      var costoTotal = parseFloat(r['Costo Total'])||0;
+      TRIPS.push({
+        id:id, carrier:carrierKey, fletera:r['Fletera'], chofer:r['Chofer'],
+        placas:r['Placas'], fecha:String(r['Fecha']).split('T')[0]||r['Fecha'],
+        origen:oriKey, numPlanas:tripRows.length, planas:planas,
+        precioFlete:pf, status:status,
+        basculaSalida:null, basculaLlegada:null,
+        pesoNeto:pesoNeto||null, costoArena:costoArena||null,
+        costoFlete:costoFlete||null, costoTotal:costoTotal||null
+      });
+    });
+    // Sort by date desc
+    TRIPS.sort(function(a,b){return b.id.localeCompare(a.id);});
+    bldHis();
+  } catch(e){ console.error('Error loading trips:', e); bldHis(); }
+
+  // Load inventory movements
+  try {
+    var res2 = await fetch(SU+'?tipo=inventario');
+    var invRows = await res2.json();
+    if(!invRows||!invRows.length) return;
+    invRows.forEach(function(m){
+      var arena = m['Arena'];
+      var bod = m['Bodega']==='Bodega 3'?'b3':'b4';
+      var kg = parseFloat(m['Kg'])||0;
+      var cant = parseFloat(m['Cantidad'])||0;
+      var unit = m['Unidad']||'';
+      var esSS = unit.toLowerCase().includes('supersaco');
+      if(!INV[bod][arena]) INV[bod][arena]={ss:{pz:0,kg:0},c50:{pz:0,kg:0}};
+      if(m['Tipo']==='entrada'){
+        if(esSS){INV[bod][arena].ss.pz+=cant;INV[bod][arena].ss.kg+=kg;}
+        else{INV[bod][arena].c50.pz+=cant;INV[bod][arena].c50.kg+=kg;}
+      } else {
+        if(esSS){INV[bod][arena].ss.pz-=cant;INV[bod][arena].ss.kg-=kg;}
+        else{INV[bod][arena].c50.pz-=cant;INV[bod][arena].c50.kg-=kg;}
+      }
+      MOVS.push({tipo:m['Tipo'],bodega:m['Bodega'],arena:arena,kg:kg,
+        unidad:unit,cant:cant,ref:m['Referencia']||'',ts:String(m['Fecha'])});
+    });
+    renderInv();
+  } catch(e){ console.error('Error loading inventory:', e); }
+}
+
+function goBack(){
+  if(fromUrl)return;
+  ia=false;cc=null;
+  document.getElementById('app').style.display='none';
+  document.getElementById('splash').style.display='flex';
+  document.getElementById('pwdi').value='';
+  document.getElementById('perr').style.display='none';
+}
+
+document.addEventListener('DOMContentLoaded',function(){
+  document.getElementById('btn-AER').addEventListener('click',function(){enterApp('AER',null);});
+  document.getElementById('btn-Flagga').addEventListener('click',function(){enterApp('Flagga',null);});
+  document.getElementById('btn-Felipe').addEventListener('click',function(){enterApp('Felipe',null);});
+  document.getElementById('btn-Admin').addEventListener('click',function(){enterApp('Admin',null);});
+  document.getElementById('backbtn').addEventListener('click',goBack);
+  document.getElementById('btn-login').addEventListener('click',chkPwd);
+  document.getElementById('pwdi').addEventListener('keydown',function(e){if(e.key==='Enter')chkPwd();});
+  document.getElementById('tab-nvo').addEventListener('click',function(){shSc('nvo');document.querySelectorAll('.nbtn').forEach(function(b){b.classList.remove('active');});this.classList.add('active');});
+  document.getElementById('tab-his').addEventListener('click',function(){shSc('his');bldHis();document.querySelectorAll('.nbtn').forEach(function(b){b.classList.remove('active');});this.classList.add('active');});
+  document.getElementById('invt').addEventListener('click',function(){shSc('inv');renderInv();document.querySelectorAll('.nbtn').forEach(function(b){b.classList.remove('active');});this.classList.add('active');});
+  document.getElementById('lnkt').addEventListener('click',function(){shSc('lnk');bldLinks();document.querySelectorAll('.nbtn').forEach(function(b){b.classList.remove('active');});this.classList.add('active');});
+  document.getElementById('npl').addEventListener('change',rndrPl);
+  document.getElementById('ori').addEventListener('change',rndrPl);
+  document.getElementById('btn-reg').addEventListener('click',regViaje);
+  document.getElementById('itab-saldo').addEventListener('click',function(){shInvTab('saldo');});
+  document.getElementById('itab-entrada').addEventListener('click',function(){shInvTab('entrada');});
+  document.getElementById('itab-salida').addEventListener('click',function(){shInvTab('salida');});
+  document.getElementById('itab-movs').addEventListener('click',function(){shInvTab('movs');});
+  document.getElementById('in-cant').addEventListener('input',function(){
+    var cant=parseFloat(this.value)||0,unit=document.getElementById('in-unit').value;
+    var kg=cant*(KG_UNIT[unit]||1),tg=document.getElementById('in-preview');
+    if(kg>0){tg.textContent='Total: '+kg.toLocaleString()+' kg = '+(kg/1000).toFixed(2)+' ton';tg.style.display='block';}else tg.style.display='none';
+  });
+  document.getElementById('out-cant').addEventListener('input',function(){
+    var cant=parseFloat(this.value)||0,unit=document.getElementById('out-unit').value;
+    var kg=cant*(KG_UNIT[unit]||1),tg=document.getElementById('out-preview');
+    if(kg>0){tg.textContent='Total: '+kg.toLocaleString()+' kg = '+(kg/1000).toFixed(2)+' ton';tg.style.display='block';}else tg.style.display='none';
+  });
+  document.getElementById('btn-entrada').addEventListener('click',regEntrada);
+  document.getElementById('btn-salida').addEventListener('click',regSalida);
+  var p=new URLSearchParams(window.location.search);
+  var f=p.get('f'),t=p.get('trip');
+  if(f){fromUrl=true;document.getElementById('splash').style.display='none';if(t)loadTripFromSheets(f,t);else enterApp(f,null);}
+});
+</script>
+</body>
+</html>
