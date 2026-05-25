@@ -363,9 +363,11 @@ function chkPwd(){
     document.getElementById('fld').value='Todos los proveedores';
     document.getElementById('ttl').textContent='Panel admin';
     document.getElementById('perr').style.display='none';
-    bldLinks(); rndrPl(); bldHis(); renderInv(); shSc('his');
+    bldLinks(); rndrPl(); renderInv();
     document.querySelectorAll('.nbtn').forEach(function(b){b.classList.remove('active');});
     document.getElementById('tab-his').classList.add('active');
+    shSc('his');
+    loadAllFromSheets();
   } else {
     document.getElementById('perr').style.display='block';
   }
@@ -632,8 +634,8 @@ function renderInv(){
   var el=document.getElementById('inv-saldo');
   if(!el)return;
   function fmtRow(lbl,pz,kg){
-    if(pz<=0)return '';
-    return '<div class="sub-row"><span>'+lbl+'</span><span>'+Math.round(pz)+' pzas · '+kg.toLocaleString()+' kg</span></div>';
+    var cls=pz<=0?'color:var(--fa)':'';
+    return '<div class="sub-row" style="'+cls+'"><span>'+lbl+'</span><span>'+Math.round(pz<=0?0:pz)+' pzas · '+(kg<=0?0:kg).toLocaleString()+' kg</span></div>';
   }
   function bldTable(bKey,bName){
     var html='',totalKg=0;
@@ -641,17 +643,17 @@ function renderInv(){
       var ss=INV[bKey][a]?INV[bKey][a].ss:{pz:0,kg:0};
       var c50=INV[bKey][a]?INV[bKey][a].c50:{pz:0,kg:0};
       var tot=ss.kg+c50.kg; totalKg+=tot;
-      if(tot<=0)return;
       var tons=(tot/1000).toFixed(2),uid=bKey+idx;
-      html+='<div class="acc-row">'+
+      var dimmed=tot<=0?'opacity:0.4;':'' ;
+      var cero=tot<=0?'<span style="font-size:11px;color:var(--dtx);background:var(--dbg);padding:2px 7px;border-radius:999px;margin-left:6px;">Sin stock</span>':'';
+      html+='<div class="acc-row" style="'+dimmed+'">'+
         '<div class="acc-head" data-uid="'+uid+'">'+
-        '<div class="inm">'+a+'</div>'+
+        '<div class="inm">'+a+cero+'</div>'+
         '<div style="display:flex;align-items:center;gap:8px;">'+
         '<div class="iq">'+tot.toLocaleString()+' kg<small>'+tons+' ton</small></div>'+
         '<i class="ti ti-chevron-down" style="font-size:14px;color:var(--fa);" id="ico-'+uid+'"></i></div></div>'+
         '<div class="acc-body" id="body-'+uid+'">'+fmtRow('Supersacos 2,000 kg',ss.pz,ss.kg)+fmtRow('Costales 50 kg',c50.pz,c50.kg)+'</div></div>';
     });
-    if(!html)html='<p style="font-size:13px;color:var(--fa);padding:8px 0;">Sin stock.</p>';
     return '<div style="font-size:11px;font-weight:500;color:var(--fa);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">'+bName+'</div>'+
       '<div class="card" style="margin-bottom:1rem;">'+html+
       '<div style="display:flex;justify-content:space-between;padding:10px 0 2px;border-top:.5px solid var(--bds);"><div class="inm">Total bodega</div><div class="iq">'+totalKg.toLocaleString()+' kg<small>'+(totalKg/1000).toFixed(1)+' ton</small></div></div></div>';
@@ -663,11 +665,12 @@ function renderInv(){
       var ss3=INV.b3[a]?INV.b3[a].ss:{pz:0,kg:0},c3=INV.b3[a]?INV.b3[a].c50:{pz:0,kg:0};
       var ssTot={pz:ss4.pz+ss3.pz,kg:ss4.kg+ss3.kg},c50Tot={pz:c4.pz+c3.pz,kg:c4.kg+c3.kg};
       var tot=ssTot.kg+c50Tot.kg; totalKg+=tot;
-      if(tot<=0)return;
       var tons=(tot/1000).toFixed(2),uid='comb'+idx;
-      html+='<div class="acc-row">'+
+      var dimC=tot<=0?'opacity:0.4;':'';
+      var ceroC=tot<=0?'<span style="font-size:11px;color:var(--dtx);background:var(--dbg);padding:2px 7px;border-radius:999px;margin-left:6px;">Sin stock</span>':'';
+      html+='<div class="acc-row" style="'+dimC+'">'+
         '<div class="acc-head" data-uid="'+uid+'">'+
-        '<div class="inm">'+a+'</div>'+
+        '<div class="inm">'+a+ceroC+'</div>'+
         '<div style="display:flex;align-items:center;gap:8px;">'+
         '<div class="iq">'+tot.toLocaleString()+' kg<small>'+tons+' ton</small></div>'+
         '<i class="ti ti-chevron-down" style="font-size:14px;color:var(--fa);" id="ico-'+uid+'"></i></div></div>'+
@@ -745,11 +748,20 @@ function regSalida(){
   var totalDisp=(INV[bod][arena].ss.kg||0)+(INV[bod][arena].c50.kg||0);
   if(totalDisp<kg){shT('Saldo insuficiente de '+arena+' en '+bName,'e');return;}
   var esSS=unit.startsWith('supersaco');
-  if(esSS){INV[bod][arena].ss.pz-=cant;INV[bod][arena].ss.kg-=kg;}
-  else{
+  if(esSS){
+    INV[bod][arena].ss.pz=Math.max(0,INV[bod][arena].ss.pz-cant);
+    INV[bod][arena].ss.kg=Math.max(0,INV[bod][arena].ss.kg-kg);
+  } else {
     var dispC=INV[bod][arena].c50.kg||0;
-    if(dispC>=kg){INV[bod][arena].c50.pz-=cant;INV[bod][arena].c50.kg-=kg;}
-    else{INV[bod][arena].c50={pz:0,kg:0};var rest=kg-dispC;INV[bod][arena].ss.kg-=rest;INV[bod][arena].ss.pz-=Math.ceil(rest/2000);}
+    if(dispC>=kg){
+      INV[bod][arena].c50.pz=Math.max(0,INV[bod][arena].c50.pz-cant);
+      INV[bod][arena].c50.kg=Math.max(0,INV[bod][arena].c50.kg-kg);
+    } else {
+      INV[bod][arena].c50={pz:0,kg:0};
+      var rest=kg-dispC;
+      INV[bod][arena].ss.kg=Math.max(0,INV[bod][arena].ss.kg-rest);
+      INV[bod][arena].ss.pz=Math.max(0,INV[bod][arena].ss.pz-Math.ceil(rest/2000));
+    }
   }
   MOVS.unshift({tipo:'salida',bodega:bName,arena:arena,kg:kg,unidad:LBL_UNIT[unit]||unit,cant:cant,ref:cliente,remision:remision,oc:oc,ts:new Date().toLocaleString('es-MX')});
   document.getElementById('out-cant').value='';
@@ -782,6 +794,80 @@ function shT(msg,type){
   if(!t){t=document.createElement('div');t.id='tst';t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);padding:12px 20px;border-radius:10px;font-size:14px;font-weight:500;z-index:999;transition:opacity .3s;max-width:300px;text-align:center;';document.body.appendChild(t);}
   t.textContent=msg;t.style.background=type==='o'?'var(--sbg)':'var(--dbg)';t.style.color=type==='o'?'var(--stx)':'var(--dtx)';t.style.opacity='1';
   setTimeout(function(){t.style.opacity='0';},3000);
+}
+
+async function loadAllFromSheets(){
+  try {
+    // Load all trips
+    var res = await fetch(SU);
+    var rows = await res.json();
+    if(!rows||!rows.length) { bldHis(); return; }
+    // Group rows by Trip ID
+    var tripMap = {};
+    rows.forEach(function(r){
+      var id = r['Trip ID'];
+      if(!id) return;
+      if(!tripMap[id]) tripMap[id] = [];
+      tripMap[id].push(r);
+    });
+    // Reconstruct trip objects
+    Object.keys(tripMap).forEach(function(id){
+      if(TRIPS.find(function(t){return t.id===id;})) return; // already loaded
+      var tripRows = tripMap[id];
+      var r = tripRows[0];
+      var oriKey = r['Origen']&&r['Origen'].includes('Alvarado')?'alvarado':'cerquilla';
+      var planas = tripRows.map(function(row){
+        var arena = row['Arena']||'';
+        var match = AR[oriKey]?AR[oriKey].find(function(a){return a.l===arena;}):null;
+        return {plana:row['Planas']||1,arena:arena,formato:row['Formato']||'',piezas:row['Piezas']||'',precioArena:match?match.p:0};
+      });
+      var carrierKey = Object.keys(CR).find(function(k){return CR[k].name===r['Fletera'];})||'AER';
+      var pf = CR[carrierKey]?CR[carrierKey].fl[oriKey]||0:0;
+      var status = r['Status']||'Registrado';
+      var pesoNeto = parseFloat(r['Peso Neto Final'])||0;
+      var costoArena = parseFloat(r['Costo Arena'])||0;
+      var costoFlete = parseFloat(r['Costo Flete'])||0;
+      var costoTotal = parseFloat(r['Costo Total'])||0;
+      TRIPS.push({
+        id:id, carrier:carrierKey, fletera:r['Fletera'], chofer:r['Chofer'],
+        placas:r['Placas'], fecha:String(r['Fecha']).split('T')[0]||r['Fecha'],
+        origen:oriKey, numPlanas:tripRows.length, planas:planas,
+        precioFlete:pf, status:status,
+        basculaSalida:null, basculaLlegada:null,
+        pesoNeto:pesoNeto||null, costoArena:costoArena||null,
+        costoFlete:costoFlete||null, costoTotal:costoTotal||null
+      });
+    });
+    // Sort by date desc
+    TRIPS.sort(function(a,b){return b.id.localeCompare(a.id);});
+    bldHis();
+  } catch(e){ console.error('Error loading trips:', e); bldHis(); }
+
+  // Load inventory movements
+  try {
+    var res2 = await fetch(SU+'?tipo=inventario');
+    var invRows = await res2.json();
+    if(!invRows||!invRows.length) return;
+    invRows.forEach(function(m){
+      var arena = m['Arena'];
+      var bod = m['Bodega']==='Bodega 3'?'b3':'b4';
+      var kg = parseFloat(m['Kg'])||0;
+      var cant = parseFloat(m['Cantidad'])||0;
+      var unit = m['Unidad']||'';
+      var esSS = unit.toLowerCase().includes('supersaco');
+      if(!INV[bod][arena]) INV[bod][arena]={ss:{pz:0,kg:0},c50:{pz:0,kg:0}};
+      if(m['Tipo']==='entrada'){
+        if(esSS){INV[bod][arena].ss.pz+=cant;INV[bod][arena].ss.kg+=kg;}
+        else{INV[bod][arena].c50.pz+=cant;INV[bod][arena].c50.kg+=kg;}
+      } else {
+        if(esSS){INV[bod][arena].ss.pz-=cant;INV[bod][arena].ss.kg-=kg;}
+        else{INV[bod][arena].c50.pz-=cant;INV[bod][arena].c50.kg-=kg;}
+      }
+      MOVS.push({tipo:m['Tipo'],bodega:m['Bodega'],arena:arena,kg:kg,
+        unidad:unit,cant:cant,ref:m['Referencia']||'',ts:String(m['Fecha'])});
+    });
+    renderInv();
+  } catch(e){ console.error('Error loading inventory:', e); }
 }
 
 function goBack(){
