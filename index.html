@@ -3,7 +3,14 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Arenas y Gravas Leon</title>
+<title>GA-ME Arenas Silicas</title>
+<meta name="theme-color" content="#1a6b7a"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+<meta name="apple-mobile-web-app-title" content="GA-ME"/>
+<link rel="manifest" href="manifest.json"/>
+<link rel="apple-touch-icon" href="icon-192.png"/>
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.11.0/dist/tabler-icons.min.css"/>
 <style>
 :root{--bg:#f5f4f0;--sf:#fff;--bd:rgba(0,0,0,.10);--bds:rgba(0,0,0,.18);--tx:#1a1a18;--mu:#6b6b66;--fa:#a0a09a;--sbg:#eaf3de;--stx:#3b6d11;--wbg:#faeeda;--wtx:#854f0b;--ibg:#e6f1fb;--itx:#185fa5;--dbg:#fcebeb;--dtx:#a32d2d;--r:10px;--rs:6px;--fn:system-ui,-apple-system,sans-serif;}
@@ -101,7 +108,8 @@ body{font-family:var(--fn);background:var(--bg);min-height:100vh;color:var(--tx)
 <body>
 
 <div id="splash">
-  <div class="slogo">Arenas y Gravas Leon</div>
+  <img src="icon-192.png" style="width:100px;margin-bottom:12px;border-radius:12px;" alt="GA-ME"/>
+  <div class="slogo">GA-ME Arenas Silicas</div>
   <div class="ssub">Sistema de control de cargas</div>
   <div class="slbl">Selecciona tu empresa</div>
   <button class="cbtn" id="btn-AER">
@@ -115,6 +123,10 @@ body{font-family:var(--fn);background:var(--bg);min-height:100vh;color:var(--tx)
   <button class="cbtn" id="btn-Felipe">
     <div class="cico"><i class="ti ti-truck" style="font-size:18px;color:#6b6b66"></i></div>
     <div><div class="cnm">Felipe Salazar</div><div class="cds">La Cerquilla y Alvarado</div></div>
+  </button>
+  <button class="cbtn" id="btn-Joaquin">
+    <div class="cico"><i class="ti ti-truck" style="font-size:18px;color:#6b6b66"></i></div>
+    <div><div class="cnm">Joaquin</div><div class="cds">La Cerquilla y Alvarado</div></div>
   </button>
   <button class="adme" id="btn-Admin">
     <i class="ti ti-lock" style="font-size:13px;"></i> Acceso administrador
@@ -270,9 +282,10 @@ body{font-family:var(--fn);background:var(--bg);min-height:100vh;color:var(--tx)
 var SU = 'https://script.google.com/macros/s/AKfycbziUdwkT2wbFSwwQbe_QzvNBfKSfy8LmMug6Kx1PI6Uyy6rKfIBRXPcLh2dgqTT8Waa_w/exec';
 var AP = '1234';
 var CR = {
-  AER:   {name:'AER — Auto Express Rodriguez', short:'AER', rutas:['cerquilla','alvarado'], fl:{cerquilla:820,alvarado:770}},
-  Flagga:{name:'Flagga',                        short:'FLG', rutas:['cerquilla','alvarado'], fl:{cerquilla:800,alvarado:800}},
-  Felipe:{name:'Felipe Salazar',                short:'FEL', rutas:['cerquilla','alvarado'], fl:{cerquilla:800,alvarado:800}}
+  AER:    {name:'AER — Auto Express Rodriguez', short:'AER', rutas:['cerquilla','alvarado'], fl:{cerquilla:820,alvarado:750}},
+  Flagga: {name:'Flagga',                        short:'FLG', rutas:['cerquilla','alvarado'], fl:{cerquilla:800,alvarado:750}},
+  Felipe: {name:'Felipe Salazar',                short:'FEL', rutas:['cerquilla','alvarado'], fl:{cerquilla:800,alvarado:750}},
+  Joaquin:{name:'Joaquin',                       short:'JOA', rutas:['cerquilla','alvarado'], fl:{cerquilla:800,alvarado:750}}
 };
 var AR = {
   cerquilla:[
@@ -619,7 +632,7 @@ function bldHis(){
 
 function bldLinks(){
   var base=window.location.href.split('?')[0];
-  var links=[{name:'AER — Auto Express Rodriguez',key:'AER'},{name:'Flagga',key:'Flagga'},{name:'Felipe Salazar',key:'Felipe'},{name:'Administrador',key:'Admin'}];
+  var links=[{name:'AER — Auto Express Rodriguez',key:'AER'},{name:'Flagga',key:'Flagga'},{name:'Felipe Salazar',key:'Felipe'},{name:'Joaquin',key:'Joaquin'},{name:'Administrador',key:'Admin'}];
   document.getElementById('linkbox').innerHTML=links.map(function(l){
     var url=base+'?f='+l.key;
     return '<div class="linkrow"><div><div class="linknm">'+l.name+'</div><div class="linkurl">'+url+'</div></div>'+
@@ -883,6 +896,7 @@ document.addEventListener('DOMContentLoaded',function(){
   document.getElementById('btn-AER').addEventListener('click',function(){enterApp('AER',null);});
   document.getElementById('btn-Flagga').addEventListener('click',function(){enterApp('Flagga',null);});
   document.getElementById('btn-Felipe').addEventListener('click',function(){enterApp('Felipe',null);});
+  document.getElementById('btn-Joaquin').addEventListener('click',function(){enterApp('Joaquin',null);});
   document.getElementById('btn-Admin').addEventListener('click',function(){enterApp('Admin',null);});
   document.getElementById('backbtn').addEventListener('click',goBack);
   document.getElementById('btn-login').addEventListener('click',chkPwd);
@@ -910,6 +924,11 @@ document.addEventListener('DOMContentLoaded',function(){
   });
   document.getElementById('btn-entrada').addEventListener('click',regEntrada);
   document.getElementById('btn-salida').addEventListener('click',regSalida);
+  // Register service worker for PWA
+  if('serviceWorker' in navigator){
+    navigator.serviceWorker.register('sw.js').catch(function(){});
+  }
+
   var p=new URLSearchParams(window.location.search);
   var f=p.get('f'),t=p.get('trip');
   if(f){fromUrl=true;document.getElementById('splash').style.display='none';if(t)loadTripFromSheets(f,t);else enterApp(f,null);}

@@ -1,0 +1,24 @@
+{
+  "name": "GA-ME Arenas Silicas",
+  "short_name": "GA-ME",
+  "description": "Sistema de control de cargas e inventario",
+  "start_url": "/Arenas-Le-n/",
+  "display": "standalone",
+  "background_color": "#f5f4f0",
+  "theme_color": "#1a6b7a",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
